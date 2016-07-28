@@ -20,7 +20,7 @@ app.config(function($routeProvider, FBCreds) {
       templateUrl: 'partials/selectTrail.html',
       controller: 'selectTrailCtrl'
    })
-   .when('/trail', {
+   .when('/trail/:trailId', {
       templateUrl: 'partials/trail.html',
       controller: 'trailCtrl'
    });

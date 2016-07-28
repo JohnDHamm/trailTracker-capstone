@@ -24,4 +24,5 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 
 
 	return {getTrailList};
+	
 });
