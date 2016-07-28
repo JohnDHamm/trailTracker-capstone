@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Trail Tracker</title>
+	<!-- Materialize: Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <!-- Materialize: NECESSARY FOR ICONS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- WHAT GOOGLE FONTS SHALL WE USE? -->
+ <!--  <link href='https://fonts.googleapis.com/css?family=Amatic+SC|Shadows+Into+Light|Limelight|Rock+Salt' rel='stylesheet' type='text/css'> -->
+	<link rel="stylesheet" href="styles/main.css">
+</head>
+<body ng-app="TrailApp">
+
+<!-- Navbar -->
+	<div ng-include="'partials/navbar.html'"></div>
+
+<!-- Main view -->
+	<div class="container" ng-view></div>
+
+
+
+
+<!-- ============= LINK TAGS ============= -->
+  <!-- BEGINNING OF THE DANG LINK TAGS -->
+  <script type="text/javascript" src="lib/bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="lib/bower_components/angular-route/angular-route.min.js"></script>
+  <script type="text/javascript" src="lib/bower_components/firebase/firebase.js"></script>
+
+  <!-- Materialize: jQuery (necessary for Materialize's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+
+  <!-- Materialize: Latest compiled and minified JavaScript -->  
+  <!-- <script type="text/javascript" src="lib/bower_components/materialize/dist/css/materialize.min.js"></script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+  <!-- APP FIRST -->
+  <script type="text/javascript" src="app/app.js"></script>
+  <!-- FACTORIES SECOND -->
+  <script type="text/javascript" src="/app/factories/AuthFactory.js"></script>
+  <script type="text/javascript" src="/app/factories/DatabaseFactory.js"></script>
+  <!-- CONTROLLERS LAST -->
+  <script type="text/javascript" src="/app/controllers/loginCtrl.js"></script>
+  <script type="text/javascript" src="/app/controllers/selectTrailCtrl.js"></script>
+  <script type="text/javascript" src="/app/controllers/trailCtrl.js"></script>
+
+
+	<script type="text/javascript" src="app/app.js"></script>
+</body>
+</html>
