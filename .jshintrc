@@ -2,5 +2,6 @@
     "predef": [ "document", "console", "jquery", "module", "require", "jQuery", "angular", "firebase"],
     "esversion": 6,
     "globalstrict": true,
-    "jquery": true
+    "jquery": true,
+    "globals": { "$": true, "app": true }
 }

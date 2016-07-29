@@ -8,7 +8,7 @@ app.controller("selectTrailCtrl", function($scope, DatabaseFactory){
 	DatabaseFactory.getTrailList()
 		.then(function(trails){
 			$scope.trailList =  trails;
-		})
+		});
 
 
 
