@@ -28,10 +28,13 @@
   <script type="text/javascript" src="lib/bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/angular-route/angular-route.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/firebase/firebase.js"></script>
+<!-- for angular-google-maps -->
+  <script src='lib/bower_components/lodash/dist/lodash.min.js'></script>
+	<script src='lib/bower_components/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+	<script src='lib/bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
 
   <!-- Materialize: jQuery (necessary for Materialize's JavaScript plugins) -->
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
-
   <!-- Materialize: Latest compiled and minified JavaScript -->  
   <!-- <script type="text/javascript" src="lib/bower_components/materialize/dist/css/materialize.min.js"></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
@@ -41,11 +44,16 @@
   <!-- FACTORIES SECOND -->
 <!--   <script type="text/javascript" src="/app/factories/AuthFactory.js"></script> -->
   <script type="text/javascript" src="/app/factories/DatabaseFactory.js"></script>
+  <script type="text/javascript" src="/app/factories/MapFactory.js"></script>
   <!-- CONTROLLERS LAST -->
   <script type="text/javascript" src="/app/controllers/loginCtrl.js"></script>
   <script type="text/javascript" src="/app/controllers/selectTrailCtrl.js"></script>
   <script type="text/javascript" src="/app/controllers/trailCtrl.js"></script>
+
   <script type="text/javascript" src="/app/values/FirebaseCreds.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkCVdTHzHjxjJ0XEzjKrWeyj0YZJLKfqo"
+    async defer></script>
 
 </body>
 </html>

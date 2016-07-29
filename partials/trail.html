@@ -7,10 +7,14 @@
 			<div id="trailName" class="col s12">
 				<h1>{{selectedTrail.trailName}}</h1>
 			</div>
-			<div id="map" class="col s12">
-				<h3>map goes here</h3>
+			<div id="mapView" class="col s12">
+				<div id="map" class="angular-google-map-container"><!-- {{getMap()}} -->
+					<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+				</div>
+<!-- 				<h3>map goes here</h3>
 				<p>latitude: {{selectedTrail.latitude}}</p>
-				<p>longitude: {{selectedTrail.longitude}}</p>
+				<p>longitude: {{selectedTrail.longitude}}</p> -->
+
 			</div>
 			<div id="weather" class="col s12>"> 
 				<h3>current weather goes here</h3>

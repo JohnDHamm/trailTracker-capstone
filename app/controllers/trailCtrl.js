@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("trailCtrl", function($scope, $routeParams,DatabaseFactory){
+app.controller("trailCtrl", function($scope, $routeParams,DatabaseFactory, MapFactory, uiGmapGoogleMapApi){
 
 	// get all trails then filter to just the trail with the path Id
 	$scope.trailList = [];
@@ -31,6 +31,18 @@ app.controller("trailCtrl", function($scope, $routeParams,DatabaseFactory){
 
 	// get map 
 
+
+// .controller("someController", function($scope, uiGmapGoogleMapApi) {
+    // Do stuff with your $scope.
+    // Note: Some of the directives require at least something to be defined originally!
+    // e.g. $scope.markers = []
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
+    // uiGmapGoogleMapApi is a promise.
+    // The "then" callback function provides the google.maps object.
+    uiGmapGoogleMapApi.then(function(maps) {
+
+    });
 
 
 
