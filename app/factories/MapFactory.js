@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("MapFactory", function($q, $http, FirebaseURL) {
+app.factory("MapFactory", function($q, $http, FirebaseURL, uiGmapGoogleMapApi) {
 
 	let getTrailMap = function(){
 
@@ -10,7 +10,8 @@ app.factory("MapFactory", function($q, $http, FirebaseURL) {
 		// });
 
 		// return map;
-
+		// uiGmapGoogleMapApi.then(function(maps) {
+		// 		    		});
 
 	};
 
