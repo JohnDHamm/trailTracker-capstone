@@ -10,8 +10,6 @@ app.factory("WeatherFactory", function($q, $http) {
 				resolve(data);
 			});
 		});
-
-
 	}
 
 
