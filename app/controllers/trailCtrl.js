@@ -29,7 +29,7 @@ app.controller("trailCtrl", function($scope, $routeParams,DatabaseFactory, Weath
 					});
 			})
 				.then(function(){
-				// get map 
+				// ********* GET GOOGLE MAP *************************
 			    // Do stuff with your $scope.
 			    // Note: Some of the directives require at least something to be defined originally!
 			    // e.g. $scope.markers = []
@@ -48,15 +48,14 @@ app.controller("trailCtrl", function($scope, $routeParams,DatabaseFactory, Weath
 				})
 					.then(function(){
 
-					// get weather
+					// ********* GET WEATHER *************************
 					console.log("get the current weather");
 					console.log("lat", $scope.selectedTrail.latitude);
 			    console.log("long", $scope.selectedTrail.longitude);
 
-					WeatherFactory.getCurrentWeather(36.101153, -86.628356)
+					WeatherFactory.getCurrentWeather($scope.selectedTrail.latitude, $scope.selectedTrail.longitude)
 						.then(function(weather){
 							console.log("weather", weather);
-							console.log("temp", weather.current_observation.temp_f);
 							$scope.weather = weather.current_observation;
 						});
 
