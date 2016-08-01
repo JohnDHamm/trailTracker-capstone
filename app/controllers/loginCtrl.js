@@ -1,27 +1,28 @@
 "use strict";
 
-app.controller("loginCtrl", function($scope, AuthFactory){
+app.controller("loginCtrl", function($scope, AuthFactory, $location){
 
-	$scope.registerMode = true;
+// Callan's example
+	// $scope.registerMode = true;
 
-	$scope.activateRegisterMode = function(){
-		$scope.registerMode = true;
-	};
+	// $scope.activateRegisterMode = function(){
+	// 	$scope.registerMode = true;
+	// };
 
-	$scope.activateLoginMode = function(){
-		$scope.registerMode = false;
-	};
+	// $scope.activateLoginMode = function(){
+	// 	$scope.registerMode = false;
+	// };
 
 	//register function
 
 
-	//login function
-	// AuthFactory.authWithProvider()
+	// login function
+	// function login(){
+	// 	AuthFactory.authWithProvider()
  //    .then(function(result) {
  //      var user = result.user.uid;
- //      console.log("logged in user fer sure", user);
  //      // Load to dos?
- //      $location.path("/");
+ //      $location.path("/selectTrail");
  //      $scope.$apply();
  //    }).catch(function(error) {
  //      // Handle Errors here.
@@ -33,6 +34,18 @@ app.controller("loginCtrl", function($scope, AuthFactory){
  //      var credential = error.credential;
  //      // ...
  //    });
+ //  }
+
+  	$scope.login = function(){
+		AuthFactory.authWithProvider()
+			.then(function(result){
+	      var user = result.user.uid;
+	      console.log("logged in user fer sure", user);
+				$location.path("/items/selectTrail");
+				$scope.$apply();
+			});
+	};
+
 
 
 });

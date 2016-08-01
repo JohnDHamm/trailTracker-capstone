@@ -22,10 +22,21 @@
 		</div>
 
 		<div id="rightHalf" class="col m5 s12">
-			<div id="addPostDiv" class="col s12">
+
+
+			<div id="addPostDiv" class="col s12" ng-show="loggedIn">
 				<h4>add new post</h4>
 				<div class="divider"></div>
 			</div>
+
+			<div id="addPostDiv" class="col s12" ng-show="!loggedIn">
+				<div class="collection">
+					<a class="collection-item center-align" ng-href="#/login">Login to add a post</a>
+				</div>
+				<div class="divider"></div>
+			</div>
+
+
 			<div id="posts" class="col s12">
 				<div ng-repeat="post in posts">
 					<div class="section">

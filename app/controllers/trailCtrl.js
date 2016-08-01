@@ -1,6 +1,9 @@
 "use strict";
 
-app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi){
+app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory){
+
+	//check if logged in to display option for adding new post
+	$scope.loggedIn = AuthFactory.isAuthenticated();
 
 	// get all trails then filter to just the trail with the path Id
 	$scope.trailList = [];
