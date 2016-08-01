@@ -22,12 +22,10 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 
 	// get all posts with associated trailId
 	let getTrailPosts = function(trailId){
-		console.log("trailId", trailId);
 		let postsArray = [];
 		return $q(function(resolve, reject) {
 			$http.get(`${FirebaseURL}/posts.json?orderBy="postTrailId"&equalTo="${trailId}"`)
 			.success(function(postsObj) {
-				console.log("postsObj", postsObj);
 				//create array from object and loop thru keys to push each board to the posts array
 				Object.keys(postsObj).forEach(function(key){
 					postsArray.push(postsObj[key]);

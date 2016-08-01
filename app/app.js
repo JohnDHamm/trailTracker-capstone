@@ -20,16 +20,23 @@ app.config(function($routeProvider, FBCreds, uiGmapGoogleMapApiProvider) {
 
 
   $routeProvider.
-   when('/login', {
-     templateUrl: 'partials/login.html',
-     controller: 'loginCtrl'
-   })
+  	when('/login', {
+     	templateUrl: 'partials/login.html',
+     	controller: 'loginCtrl'
+   	})
    .when('/selectTrail', {
       templateUrl: 'partials/selectTrail.html',
       controller: 'selectTrailCtrl'
-   })
-   .when('/trail/:trailId', {
+   	})
+   	.when('/trail/:trailId', {
       templateUrl: 'partials/trail.html',
       controller: 'trailCtrl'
-   });
+   	})
+   	.when('/trackerHome', {
+   		templateUrl: 'partials/trackerHome.html',
+    	controller: 'trackerHomeCtrl'  
+   	})
+   	.otherwise('/trackerHome', {
+	
+   	});
 });

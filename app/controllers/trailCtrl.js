@@ -27,7 +27,6 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				return DatabaseFactory.getTrailPosts(selectedTrailId);
 			})
 			.then(function(posts){
-						console.log("map then");
 						$scope.posts = posts;
 
 					// ********* GET GOOGLE MAP *************************
