@@ -1,2 +1,45 @@
-<h1 class="{{trailColor}}">Trail page</h1>
+
+<!-- <div class="container"> -->
+
+	<div class="row">
+
+		<div id="leftHalf" class="col m7 s12">
+			<div id="trailName" class="col s12">
+				<h4 class="center-align">{{selectedTrail.trailName}}</h4>
+			</div>
+			<div id="mapView" class="col s12">
+				<div id="map" class="angular-google-map-container">
+					<ui-gmap-google-map ng-if="map.center" center='map.center' zoom='map.zoom' control="map.control"></ui-gmap-google-map>
+				</div>
+
+			</div>
+			<div id="weather" class="col s12>"> 
+				<h5>current weather: {{weather.weather}}</h5>
+				<p>temperature: {{weather.temperature_string}}</p>
+				<p>feels like: {{weather.feelslike_string}}</p>
+
+			</div>
+		</div>
+
+		<div id="rightHalf" class="col m5 s12">
+			<div id="addPostDiv" class="col s12">
+				<h4>add new post</h4>
+				<div class="divider"></div>
+			</div>
+			<div id="posts" class="col s12">
+				<div ng-repeat="post in posts">
+					<div class="section">
+						<h5>{{post.postTypeString}}</h5>
+						<h6>by: {{post.userId}}</h6>
+						<p>report: {{post.description}}</p>
+					</div>
+					<div class="divider"></div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	
+<!-- </div> -->
 
