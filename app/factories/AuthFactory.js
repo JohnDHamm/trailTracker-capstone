@@ -18,13 +18,13 @@ app.factory("AuthFactory", function(){
 	  }
 	});
 
-	var logout = function(){
-		firebase.auth().signOut().then(function(){
-			currentUserId = null;
-		}, function(error){
+	// var logout = function(){
+	// 	firebase.auth().signOut().then(function(){
+	// 		currentUserId = null;
+	// 	}, function(error){
 
-		});
-	};
+	// 	});
+	// };
 
 	var authWithProvider = function(){
 		return firebase.auth().signInWithPopup(provider);
@@ -38,6 +38,6 @@ app.factory("AuthFactory", function(){
 		return currentUserId;
 	};
 
-	return {authWithProvider, isAuthenticated, getUser, logout};
+	return {authWithProvider, isAuthenticated, getUser};
 
 });
