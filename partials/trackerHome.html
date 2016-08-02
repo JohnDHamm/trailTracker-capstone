@@ -9,18 +9,17 @@
 		<p>Parcours leberg vuelta a espana bottechia. Paris-nice de vlaeminck venga venga venga, play rouleur derby pantani normandie up cornet ventoux, fixie shut up legs cycles goff. Randonneur res firma mitescere nescit normandie planket.</p>
 	</div>
 
+	<!-- show either "select trail" or "login" button -->
 	<div class="row" ng-show="loggedIn">
 		<div class="collection col m4 offset-m4 s12">
 			<a class="collection-item center-align" ng-href="#/selectTrail">select a trail</a>
 		</div>
 	</div>
 
-
 	<div class = "row" ng-show="!loggedIn">
 		<div class="collection col m4 offset-m4 s12">
 			<a class="collection-item center-align" ng-href="#/login">Login/Register</a>
 		</div>
-	<!-- 		<button class="col-xs-2 col-xs-offset-5 btn btn-default" ng-click="#/login">Register/Login</button> -->
 	</div>
 
 </div>
