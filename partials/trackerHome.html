@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<h2 class="center-align col s12">Trail Tracker (logo)</h2>
+	</div>
+
+	<div id="appDescription" class="col m6 offset-m3 s12">
+		<p>description of the app goes here...Lorem ipsum a rochefort campagnolo a the, het volk boonen res firma mitescere nescit rouleur derby freire. For geraardsbergen, milan-san remo anquetil cutters supplesse belleville caravane.</p>
+
+		<p>Parcours leberg vuelta a espana bottechia. Paris-nice de vlaeminck venga venga venga, play rouleur derby pantani normandie up cornet ventoux, fixie shut up legs cycles goff. Randonneur res firma mitescere nescit normandie planket.</p>
+	</div>
+
+	<!-- show either "select trail" or "login" button -->
+	<div class="row" ng-show="loggedIn">
+		<div class="collection col m4 offset-m4 s12">
+			<a class="collection-item center-align" ng-href="#/selectTrail">select a trail</a>
+		</div>
+	</div>
+
+	<div class = "row" ng-show="!loggedIn">
+		<div class="collection col m4 offset-m4 s12">
+			<a class="collection-item center-align" ng-href="#/login">Login/Register</a>
+		</div>
+	</div>
+
+</div>

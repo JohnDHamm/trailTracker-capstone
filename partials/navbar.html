@@ -1,14 +1,12 @@
-<nav>
+<nav ng-controller="navCtrl">
   <div class="nav-wrapper amber accent-3">
-          <a class="brand-logo">Trail Tracker Logo</a>
+          <a ng-href="#/trackerHome" class="brand-logo">Trail Tracker Logo</a>
 
         <ul id="nav-mobile" class="right">
           <li>
-            <a ng-href="#/selectTrail"><i class="material-icons left">directions_bike</i>Trails</a></li>
-<!--           <li>
-            <a ng-href="#/trail"><i class="material-icons left">directions_bike</i>Trail</a></li> -->
+            <a ng-href="#/selectTrail"><i class="material-icons left">directions_bike</i>trails</a></li>
           <li >
-            <a ng-href="#/login"><i class="material-icons left">perm_identity</i>Logout</a></li>
+            <a ng-href="#/login" ng-click="logout()"><i class="material-icons left">perm_identity</i>logout</a></li>
         </ul>
   </div>
 </nav>

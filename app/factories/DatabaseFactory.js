@@ -22,12 +22,10 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 
 	// get all posts with associated trailId
 	let getTrailPosts = function(trailId){
-		console.log("trailId", trailId);
 		let postsArray = [];
 		return $q(function(resolve, reject) {
 			$http.get(`${FirebaseURL}/posts.json?orderBy="postTrailId"&equalTo="${trailId}"`)
 			.success(function(postsObj) {
-				console.log("postsObj", postsObj);
 				//create array from object and loop thru keys to push each board to the posts array
 				Object.keys(postsObj).forEach(function(key){
 					postsArray.push(postsObj[key]);
@@ -37,11 +35,41 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 			.error(function(error) {
 				reject(error);
 			});
-
 		});
 	};
 
+	//get all users
+	let getUsers = function(){
+		let usersList = [];
+		return $q(function(resolve, reject){
+			$http.get(`${FirebaseURL}/users.json`)
+			.success(function(usersObj){
+				//add each user to the usersList array
+				Object.keys(usersObj).forEach(function(key){
+					usersList.push(usersObj[key]);
+				});
+				resolve (usersList);
+			})
+			.error(function(error){
+				reject(error);
+			});
+		});
+	};
 
-	return {getTrailList, getTrailPosts};
+	//add user to database
+	let addUser = function(newUser){
+		return $q(function(resolve, reject){
+			$http.post(`${FirebaseURL}/users.json`,
+				JSON.stringify(newUser))
+			.success(function(ObjFromFirebase){
+				resolve(ObjFromFirebase);
+			})
+			.error(function(error){
+				reject(error);
+			});
+		});
+	};
+
+	return {getTrailList, getTrailPosts, getUsers, addUser};
 	
 });
