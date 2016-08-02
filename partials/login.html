@@ -1,15 +1,24 @@
 <div class="container">
-  <h5>login page</h5>
 
-    <div class = "row">
-      <div class="col m4 offset-m4 s12">
-        <button ng-click="login()">
-          Login with Google
-        </button>
+  <div class = "row">
+    <div class="col m4 offset-m4 s12">
+      <button ng-click="loginWithGoogle()">
+        Login with Google
+      </button>
     </div>
+  </div>
 
+
+  <div ng-show="showRegister">
+    <p>please register:</p>
+    <input type="text" name="userName" ng-model="userName">
+    <button ng-click="registerUser()">register</button>
+    
+  </div>
 
 </div>
+
+
 
 
 <!-- <div class="row">

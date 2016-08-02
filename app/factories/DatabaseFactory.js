@@ -35,11 +35,41 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 			.error(function(error) {
 				reject(error);
 			});
-
 		});
 	};
 
+	//get all users
+	let getUsers = function(){
+		let usersList = [];
+		return $q(function(resolve, reject){
+			$http.get(`${FirebaseURL}/users.json`)
+			.success(function(usersObj){
+				//add each user to the usersList array
+				Object.keys(usersObj).forEach(function(key){
+					usersList.push(usersObj[key]);
+				});
+				resolve (usersList);
+			})
+			.error(function(error){
+				reject(error);
+			});
+		});
+	};
 
-	return {getTrailList, getTrailPosts};
+	//add user to database
+	let addUser = function(newUser){
+		return $q(function(resolve, reject){
+			$http.post(`${FirebaseURL}/users.json`,
+				JSON.stringify(newUser))
+			.success(function(ObjFromFirebase){
+				resolve(ObjFromFirebase);
+			})
+			.error(function(error){
+				reject(error);
+			});
+		});
+	};
+
+	return {getTrailList, getTrailPosts, getUsers, addUser};
 	
 });
