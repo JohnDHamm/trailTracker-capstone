@@ -31,52 +31,28 @@
 			<div class="divider"></div>
 		</div>
 
-<!-- 		<div id="addPostDiv" class="col s12" ng-show="loggedIn">
-			<div class="row">
-				<div class = "col m3">
-					<h6>add a post:</h6>
-				</div>
-				<div class = "col m9">
 
-					<div>
-						<button class="btn" ng-click="showForm()">make a new post</button>
-					</div>
-					<div class="fixed-action-btn horizontal" style="top: 65px; right: 20px;">
-				    <a class="btn-floating btn-large red">
-				      <i class="large material-icons">mode_edit</i>
-				    </a>
-				    <ul>
-				      <li><a class="btn-floating green" ng-click="showForm()"><i class="material-icons">directions_bike</i></a></li>
-				      <li><a class="btn-floating yellow darken-1"><i class="material-icons">report_problem</i></a></li>
-				      <li><a class="btn-floating blue"><i class="material-icons">group</i></a></li>
-				    </ul>
-				  </div>
-				</div>
-			</div>
-			<div class="divider"></div>
-		</div>
- -->
 
 		<div id="postEntryDiv" ng-show="loggedIn">
 			<div class="col s12">
 				<p>add a new post:</p>
 				<textarea id="descriptionInput" class="materialize-textarea" ng-model="description" placeholder="type your new post here, then select type of post below"></textarea>
-<!-- 	      <label for="descriptionInput">description</label> -->
+
 	      <div id="postButtons" class="row">
 	      	
 		      <div class="col s12 m4">
 						<div class="collection">
-				    	<a class="collection-item center-align btn-large" ng-click="postRideReport()"><i class="material-icons left">directions_bike</i>ride report</a>
+				    	<a class="collection-item center-align btn-large light-green darken-3 white-text" ng-click="postRideReport()"><i class="material-icons left white-text">directions_bike</i>ride report</a>
 		      	</div>
 		      </div>
 		      <div class="col s12 m4">
 						<div class="collection">
-				    	<a class="collection-item center-align btn-large" ng-click="postRideReport()"><i class="material-icons left">report_problem</i>open ticket</a>
+				    	<a class="collection-item center-align btn-large red darken-2 white-text" ng-click="postOpenTicket()"><i class="material-icons left white-text">report_problem</i>open ticket</a>
 		      	</div>
 		      </div>
 		      <div class="col s12 m4">
 						<div class="collection">
-				    	<a class="collection-item center-align btn-large" ng-click="postRideReport()"><i class="material-icons left">group</i>post meetup</a>
+				    	<a class="collection-item center-align btn-large light-blue darken-3 white-text" ng-click="postMeetup()"><i class="material-icons left white-text">group</i>post meetup</a>
 		      	</div>
 		      </div>
 
@@ -89,20 +65,31 @@
 		<div id="posts" class="col s12">
 			<div ng-repeat="post in posts">
 				<div class="section">
-					<h5 class="{{post.postTypeString}}">{{post.postTypeString}}</h5>
-					<h6>by: {{post.userName}}</h6>
-					<p>report: {{post.description}}</p>
-					<h5>date: {{post.postDate}}</h5>
-					<div class="col s12 m3 offset-m9" ng-show="{{post.ticketOpen}}">					
-						<button class="btn deep-orange darken-4" >close ticket</button>
-						<div class="divider"></div>
+
+				<div class="row">
+					<div class="col m4">
+						<p>{{post.userName}}</p>						
+					</div>
+					<div class="col m4">
+						<h6 class="{{post.postTypeString}}">{{post.postTypeString}}</h6>
 					</div>
 				</div>
-				<div class="divider"></div>
-			</div>
 
-		</div>
-	</div>
+					<p>{{post.description}}</p>					
+					<p class="right-align">{{post.postDate}}</p>
+
+					<div class="row">
+						<div class="col s12 m3 offset-m9" ng-show="{{post.ticketOpen}}">					
+							<button class="btn lime darken-1" >close ticket</button>
+						</div>
+					</div>
+
+				</div> <!--section -->
+				<div class="divider"></div>
+			</div> <!-- ng-repeat -->
+
+		</div><!-- posts -->
+	</div> <!--right half -->
 
 </div>
 

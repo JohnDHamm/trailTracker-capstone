@@ -8,9 +8,10 @@
 
 .angular-google-map-container { height: 400px; }
 
-// #posts {
-// 	height: 400px;
-// }
+#posts {
+	height: 500px;
+	overflow: auto;
+}
 
 .ride-report {
 	color: green;
@@ -26,4 +27,9 @@
 
 .closed-ticket {
 	color: gray;
+}
+
+.postSection {
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }

@@ -78,6 +78,49 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 		DatabaseFactory.addPost(newPost)
 			.then(function(){
 				//reload page/posts
+				$scope.description = "";
+				loadTrailPage();
+			});
+	};
+
+	$scope.postOpenTicket = function(){
+		let typeString = "open-ticket";
+		let timeStamp = Date.now();
+		newPost = {
+			description: $scope.description,
+			postType: 2,
+			postTypeString: typeString,
+			userId: AuthFactory.getUserId(),
+			userName: AuthFactory.getCurrentUser().userName,
+			postDate: timeStamp,
+			ticketOpen: true,
+			postTrailId: $scope.selectedTrail.trailId
+		};
+		DatabaseFactory.addPost(newPost)
+			.then(function(){
+				//reload page/posts
+				$scope.description = "";
+				loadTrailPage();
+			});
+	};
+
+	$scope.postMeetup = function(){
+		let typeString = "meetup";
+		let timeStamp = Date.now();
+		newPost = {
+			description: $scope.description,
+			postType: 3,
+			postTypeString: typeString,
+			userId: AuthFactory.getUserId(),
+			userName: AuthFactory.getCurrentUser().userName,
+			postDate: timeStamp,
+			ticketOpen: false,
+			postTrailId: $scope.selectedTrail.trailId
+		};
+		DatabaseFactory.addPost(newPost)
+			.then(function(){
+				//reload page/posts
+				$scope.description = "";
 				loadTrailPage();
 			});
 	};

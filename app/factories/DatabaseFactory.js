@@ -71,7 +71,6 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 	};
 
 	let addPost = function(newPost){
-		console.log("newPost", newPost);
 		return $q(function(resolve, reject){
 			$http.post(`${FirebaseURL}/posts.json`,
 				JSON.stringify(newPost))
