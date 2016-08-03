@@ -43,10 +43,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 					//sort posts by most recent first
 					let key = "postDate";
 					let sortedPosts = sortByKey(posts, key);
-					console.log("sortedPosts", sortedPosts);
-
 					$scope.posts = sortedPosts;
-
 					// ********* GET GOOGLE MAP *********
 			    // uiGmapGoogleMapApi is a promise.
 			    // The "then" callback function provides the google.maps object.
@@ -141,7 +138,11 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			}
 		});
 
-		let closedDescription = `original issue: ${origPost.description} by ${origPost.userName} on ${origPost.postDate} has been closed! Beers for all!`;
+		let fixerUserName = AuthFactory.getCurrentUser().userName;
+
+		let newDescription = $scope.description;
+
+		let closedDescription = `original issue: "${origPost.description}"" by ${origPost.userName} on ${origPost.postDate} has been closed by ${fixerUserName} - "${newDescription}" - Beers for all!`;
 
 		newClosedPost = {
 			description: closedDescription,
