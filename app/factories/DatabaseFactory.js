@@ -70,6 +70,28 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 		});
 	};
 
-	return {getTrailList, getTrailPosts, getUsers, addUser};
+	let addPost = function(newPost){
+		console.log("newPost", newPost);
+		return $q(function(resolve, reject){
+			$http.post(`${FirebaseURL}/posts.json`,
+				JSON.stringify(newPost))
+			.success(function(ObjFromFirebase){
+				//need to add fb postId to item and update
+				let newPostId = ObjFromFirebase.name;
+				newPost.postId = newPostId;
+				$http.put(`${FirebaseURL}/posts/${newPostId}.json`, newPost);
+				resolve(ObjFromFirebase);
+			})
+			.error(function(error){
+				reject(error);
+			});
+		});
+	};
+
+
+
+
+
+	return {getTrailList, getTrailPosts, getUsers, addUser, addPost};
 	
 });

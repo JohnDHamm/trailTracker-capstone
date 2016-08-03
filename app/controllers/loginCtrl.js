@@ -2,7 +2,7 @@
 
 app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFactory){
 
-	let user = "";
+	let userId = "";
 	let userName = "";
 	$scope.showRegister = false;
 
@@ -12,18 +12,19 @@ app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFac
 	$scope.loginWithGoogle = function(){
 	AuthFactory.authWithProvider()
 		.then(function(result){
-      user = result.user.uid;
-      console.log("logged in user fer sure", user);
+      userId = result.user.uid;
+      // console.log("logged in user fer sure", user);
 
       //check if existing user
       DatabaseFactory.getUsers()
 	      .then(function(userList){
-	      	console.log("userList", userList);
+	      	// console.log("userList", userList);
 	      	$scope.regUser = false;
+	      	// change this to forEach loop
 	      	for (let i = 0; i < userList.length; i++) {
-	      		console.log("userId", userList[i].userId);
-		      	if (user === userList[i].userId) {
+		      	if (userId === userList[i].userId) {
 		      		$scope.regUser = true;
+		      		AuthFactory.setCurrentUser(userList[i]);
 		      	}
 	      	}
 	      	if ($scope.regUser) {
@@ -32,7 +33,6 @@ app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFac
 						// $scope.$apply();
 	      	} else {
 	      		$scope.showRegister = true;
-    				console.log("please register" );
 	      	}
 	      });
 		});
@@ -41,11 +41,11 @@ app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFac
 
 	//register function - add user with userName to FB
 	$scope.registerUser = function(){
-		let newUser = {userId: user, userName: $scope.userName};
+		let newUser = {userId: userId, userName: $scope.userName};
 		DatabaseFactory.addUser(newUser)
 			.then(function(){
 				//go to trails page
-				console.log("user registered - go to trails");
+				AuthFactory.setCurrentUser(newUser);
 				$location.path("/selectTrail");
 			});
 	};

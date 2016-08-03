@@ -2,9 +2,7 @@
 
   <div class = "row">
     <div class="col m4 offset-m4 s12">
-      <button ng-click="loginWithGoogle()">
-        Login with Google
-      </button>
+      <button ng-click="loginWithGoogle()" class="btn">login with Google</button>
     </div>
   </div>
 
@@ -12,7 +10,7 @@
   <div ng-show="showRegister">
     <p>please register:</p>
     <input type="text" name="userName" ng-model="userName">
-    <button ng-click="registerUser()">register</button>
+    <button ng-click="registerUser()" class="btn">register</button>
     
   </div>
 
