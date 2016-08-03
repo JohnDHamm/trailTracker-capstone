@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFactory){
+app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFactory, Upload, StorageFactory){
 
 	let userId = "";
 	let userName = "";
@@ -49,4 +49,10 @@ app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFac
 				$location.path("/selectTrail");
 			});
 	};
+
+	$scope.uploadImg = function(file){
+		console.log(file.name);
+		StorageFactory.uploadTask(file, StorageFactory.getMetadata());
+	};
+
 });

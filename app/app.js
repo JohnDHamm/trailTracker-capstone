@@ -1,13 +1,14 @@
 "use strict";
 
-var app = angular.module("TrailApp", ["ngRoute", "uiGmapgoogle-maps"])
+var app = angular.module("TrailApp", ["ngRoute", "uiGmapgoogle-maps", "ngFileUpload"])
 	.constant('FirebaseURL', "https://trailtracker-capstone.firebaseio.com/");
 
 app.config(function($routeProvider, FBCreds, uiGmapGoogleMapApiProvider) {
 
   let authConfig = {
     apiKey: FBCreds.apiKey,
-    authDomain: FBCreds.authDomain
+    authDomain: FBCreds.authDomain,
+    storageBucket: FBCreds.storageBucket
   };
   firebase.initializeApp(authConfig);
 

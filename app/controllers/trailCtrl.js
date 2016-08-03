@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location){
+app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory){
 
 	//check if logged in to display option for adding new post
 	$scope.loggedIn = AuthFactory.isAuthenticated();
@@ -14,6 +14,10 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 	// let showPostForm = false;
 	let newPost = {};
 	let newClosedPost = {};
+	let origPost = {};
+
+	$scope.showCloseTicketModal = false;
+	$scope.showOpenTicketModal = false;
 
 	
 
@@ -86,27 +90,6 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			});
 	};
 
-	$scope.postOpenTicket = function(){
-		let typeString = "open-ticket";
-		let timeStamp = new Date();
-		newPost = {
-			description: $scope.description,
-			postType: 2,
-			postTypeString: typeString,
-			userId: AuthFactory.getUserId(),
-			userName: AuthFactory.getCurrentUser().userName,
-			postDate: timeStamp,
-			postFormatDate: formatDate(timeStamp),
-			ticketOpen: true,
-			postTrailId: $scope.selectedTrail.trailId
-		};
-		DatabaseFactory.addPost(newPost)
-			.then(function(){
-				//reload page/posts
-				$scope.description = "";
-				loadTrailPage();
-			});
-	};
 
 	$scope.postMeetup = function(){
 		let typeString = "meetup";
@@ -130,10 +113,10 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			});
 	};
 
-	$scope.closeTicket = function (origPostId) {
-		let timeStamp = new Date();
-		let typeString = "closed-ticket";
-		let origPost = {};
+
+	$scope.closeTicketModal = function(origPostId){
+		console.log("clicked close button");
+		$scope.showCloseTicketModal = true;
 
 		//get original post for description, user, date
 		$scope.posts.forEach(function(post){
@@ -141,18 +124,28 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				origPost = post;
 			}
 		});
-		// console.log("origPost.postDate", origPost.postDate);
-		let origPostDate = origPost.postFormatDate;
-		// console.log("origPostDate", origPostDate);
+	};
+
+	//cancel button - close modal
+	$scope.cancelCloseTicket = function() {
+		$scope.showCloseTicketModal = false;
+		console.log("cancelled" );
+	};
+
+	$scope.closeTicket = function () {
+		$scope.showCloseTicketModal = false;
+
+		let timeStamp = new Date();
+		let typeString = "closed-ticket";
 
 		let fixerUserName = AuthFactory.getCurrentUser().userName;
 
-		let newDescription = $scope.description;
+		let newDescription = $scope.closeDescription;
 
-		let closedDescription = `original issue: "${origPost.description}"" by ${origPost.userName} on ${origPostDate} has been closed by ${fixerUserName} - "${newDescription}" - Beers for all!`;
+		let closedTicketDescription = `original issue: "${origPost.description}"" by ${origPost.userName} on ${origPost.postFormatDate} has been closed by ${fixerUserName} - "${newDescription}" - Beers for all!`;
 
 		newClosedPost = {
-			description: closedDescription,
+			description: closedTicketDescription,
 			postType: 4,
 			postTypeString: typeString,
 			userId: AuthFactory.getUserId(),
@@ -163,10 +156,11 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			postTrailId: $scope.selectedTrail.trailId
 		};
 
-		DatabaseFactory.resolveOpenTicket(newClosedPost, origPostId)
+		DatabaseFactory.resolveOpenTicket(newClosedPost, origPost.postId)
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
+				$scope.closeDescription = "";
 				loadTrailPage();
 			});
 	};
@@ -203,7 +197,43 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
       return date.join("/") + " " + time.join(":") + " " + suffix;
    };
 
+  $scope.openTicketModal = function(){
+		$scope.showOpenTicketModal = true;
+	};
 
+
+  $scope.uploadOpenTicketImg = function(file){
+		console.log(file.name);
+		$scope.showOpenTicketModal = false;
+		console.log("what?", StorageFactory.uploadTask(file, StorageFactory.getMetadata()));
+		$scope.postOpenTicket();
+	};
+
+
+	$scope.postOpenTicket = function(){
+		console.log("begin postng open ticket" );
+		$scope.showOpenTicketModal = false;
+		let typeString = "open-ticket";
+		let timeStamp = new Date();
+		newPost = {
+			description: $scope.description,
+			postType: 2,
+			postTypeString: typeString,
+			userId: AuthFactory.getUserId(),
+			userName: AuthFactory.getCurrentUser().userName,
+			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
+			ticketOpen: true,
+			postTrailId: $scope.selectedTrail.trailId,
+			imageUrl: StorageFactory.getImageUrl()
+		};
+		DatabaseFactory.addPost(newPost)
+			.then(function(){
+				//reload page/posts
+				$scope.description = "";
+				loadTrailPage();
+			});
+	};
 
 
 	loadTrailPage();

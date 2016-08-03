@@ -33,3 +33,29 @@
 	border: 1px solid #ccc;
 	border-radius: 5px;
 }
+
+#rightHalf{
+	position: relative;;
+}
+
+#ticketModal-close {
+	position: absolute;
+	z-index: 4;
+	width: 400px;
+	top: 200px;
+	left: 20px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	background: rgba(255,255,255,.90);
+}
+
+#ticketModal-open {
+	position: absolute;
+	z-index: 4;
+	width: 400px;
+	top: 200px;
+	left: 20px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	background: rgba(255,255,255,.90);
+}
