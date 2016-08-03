@@ -8,10 +8,12 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 	// get all trails then filter to just the trail with the path Id
 	$scope.trailList = [];
 	$scope.weather = {};
+	$scope.posts = [];
 	let selectedTrailId = "";
 	let selectedTrail = {};
 	// let showPostForm = false;
 	let newPost = {};
+	let newClosedPost = {};
 
 	
 
@@ -126,6 +128,40 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				loadTrailPage();
 			});
 	};
+
+	$scope.closeTicket = function (origPostId) {
+		let timeStamp = Date.now();
+		let typeString = "closed-ticket";
+		let origPost = {};
+
+		//get original post for description, user, date
+		$scope.posts.forEach(function(post){
+			if (post.postId === origPostId) {
+				origPost = post;
+			}
+		});
+
+		let closedDescription = `original issue: ${origPost.description} by ${origPost.userName} on ${origPost.postDate} has been closed! Beers for all!`;
+
+		newClosedPost = {
+			description: closedDescription,
+			postType: 4,
+			postTypeString: typeString,
+			userId: AuthFactory.getUserId(),
+			userName: AuthFactory.getCurrentUser().userName,
+			postDate: timeStamp,
+			ticketOpen: false,
+			postTrailId: $scope.selectedTrail.trailId
+		};
+
+		DatabaseFactory.resolveOpenTicket(newClosedPost, origPostId)
+			.then(function(){
+				//reload page/posts
+				$scope.description = "";
+				loadTrailPage();
+			});
+	};
+
 
 	function sortByKey(posts, key) {
 		return posts.sort(function(a, b) {

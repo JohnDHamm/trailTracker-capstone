@@ -87,10 +87,33 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 		});
 	};
 
+	let resolveOpenTicket = function(newClosedPost, origPostId) {
+		return $q(function(resolve, reject){
+			// post new closed ticket
+			$http.post(`${FirebaseURL}/posts.json`,
+				JSON.stringify(newClosedPost))
+			.success(function(ObjFromFirebase){
+				//need to add fb postId to item and update
+				let newPostId = ObjFromFirebase.name;
+				newClosedPost.postId = newPostId;
+				$http.put(`${FirebaseURL}/posts/${newPostId}.json`, newClosedPost);
+				resolve(ObjFromFirebase);
+			})
+			.error(function(error){
+				reject(error);
+			});
+			//delete orig open ticket
+			$http.delete(`${FirebaseURL}/posts/${origPostId}.json`)
+					.success(function(){
+						resolve();
+					});
+		});
+	};
 
 
 
 
-	return {getTrailList, getTrailPosts, getUsers, addUser, addPost};
+
+	return {getTrailList, getTrailPosts, getUsers, addUser, addPost, resolveOpenTicket};
 	
 });
