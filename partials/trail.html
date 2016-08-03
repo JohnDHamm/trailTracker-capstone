@@ -1,56 +1,100 @@
 
-<!-- <div class="container"> -->
+<div class="row">
 
-	<div class="row">
-
-		<div id="leftHalf" class="col m7 s12">
-			<div id="trailName" class="col s12">
-				<h4 class="center-align">{{selectedTrail.trailName}}</h4>
-			</div>
-			<div id="mapView" class="col s12">
-				<div id="map" class="angular-google-map-container z-depth-1">
-					<ui-gmap-google-map ng-if="map.center" center='map.center' zoom='map.zoom' control="map.control"></ui-gmap-google-map>
-				</div>
-
-			</div>
-			<div id="weather" class="col s12>"> 
-				<h5>current weather: {{weather.weather}}</h5>
-				<p>temperature: {{weather.temperature_string}}</p>
-				<p>feels like: {{weather.feelslike_string}}</p>
-
-			</div>
+	<div id="leftHalf" class="col m7 s12">
+		<div id="trailName" class="col s12">
+			<h4 class="center-align">{{selectedTrail.trailName}}</h4>
 		</div>
 
-		<div id="rightHalf" class="col m5 s12">
 
-
-			<div id="addPostDiv" class="col s12" ng-show="loggedIn">
-				<h4>add new post</h4>
-				<div class="divider"></div>
+		<div id="mapView" class="col s12">
+			<div id="map" class="angular-google-map-container z-depth-1">
+				<ui-gmap-google-map ng-if="map.center" center='map.center' zoom='map.zoom'></ui-gmap-google-map>
 			</div>
 
-			<div id="addPostDiv" class="col s12" ng-show="!loggedIn">
-				<div class="collection">
-					<a class="collection-item center-align" ng-href="#/login">Login to add a post</a>
-				</div>
-				<div class="divider"></div>
-			</div>
-
-
-			<div id="posts" class="col s12">
-				<div ng-repeat="post in posts">
-					<div class="section">
-						<h5>{{post.postTypeString}}</h5>
-						<h6>by: {{post.userId}}</h6>
-						<p>report: {{post.description}}</p>
-					</div>
-					<div class="divider"></div>
-				</div>
-
-			</div>
 		</div>
+		<div id="weather" class="col s12>"> 
+			<h5>current weather: {{weather.weather}}</h5>
+			<p>temperature: {{weather.temperature_string}}</p>
+			<p>feels like: {{weather.feelslike_string}}</p>
 
+		</div>
 	</div>
-	
-<!-- </div> -->
+
+
+	<div id="rightHalf" class="col m5 s12">
+
+		<div id="addPostDiv" class="col s12" ng-show="!loggedIn">
+			<div class="collection">
+				<a class="collection-item center-align" ng-href="#/login">Login to add a post</a>
+			</div>
+			<div class="divider"></div>
+		</div>
+
+
+
+		<div id="postEntryDiv" ng-show="loggedIn">
+			<div class="col s12">
+				<p>add a new post:</p>
+				<textarea id="descriptionInput" class="materialize-textarea" ng-model="description" placeholder="type your new post here, then select type of post below"></textarea>
+
+	      <div id="postButtons" class="row">
+	      	
+		      <div class="col s12 m4">
+						<div class="collection">
+				    	<a class="collection-item center-align btn-large light-green darken-3 white-text" ng-click="postRideReport()"><i class="material-icons left white-text">directions_bike</i>ride report</a>
+		      	</div>
+		      </div>
+		      <div class="col s12 m4">
+						<div class="collection">
+				    	<a class="collection-item center-align btn-large red darken-2 white-text" ng-click="postOpenTicket()"><i class="material-icons left white-text">report_problem</i>open ticket</a>
+		      	</div>
+		      </div>
+		      <div class="col s12 m4">
+						<div class="collection">
+				    	<a class="collection-item center-align btn-large light-blue darken-3 white-text" ng-click="postMeetup()"><i class="material-icons left white-text">group</i>post meetup</a>
+		      	</div>
+		      </div>
+
+	      </div>
+			</div>
+			<div class="divider"></div>
+		</div>
+
+
+		<div id="posts" class="col s12">
+			<div class="divider"></div>
+			<div ng-repeat="post in posts">
+				<div class="section">
+
+				<div class="row">
+					<div class="col m6">
+						<div class="chip">
+							<img src="/img/testProfilePic.jpg">{{post.userName}}</div>
+				
+					</div>
+					<div class="col m6">
+						<h6 class="{{post.postTypeString}}">{{post.postTypeString}}</h6>
+					</div>
+				</div>
+
+					<p>{{post.description}}</p>					
+					<p class="right-align">{{post.postFormatDate}}</p>
+
+					<div class="row">
+						<div class="col s12 m3 offset-m9" ng-show="{{post.ticketOpen}}">					
+							<button class="btn lime darken-1" ng-click="closeTicket(post.postId)">close ticket</button>
+						</div>
+					</div>
+
+				</div> <!--section -->
+				<div class="divider"></div>
+			</div> <!-- ng-repeat -->
+
+		</div><!-- posts -->
+	</div> <!--right half -->
+
+</div>
+
+
 

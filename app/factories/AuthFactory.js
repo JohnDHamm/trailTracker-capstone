@@ -2,18 +2,18 @@
 
 app.factory("AuthFactory", function(){
 	let currentUserId = null;
+	let currentUser = {};
 	let provider = new firebase.auth.GoogleAuthProvider();
 
 	firebase.auth().onAuthStateChanged(function(user) {
 	  if (user) {
 	    // User is signed in.
-	    console.log("user logged in, dude", user.uid);
+	    // console.log("user logged in, dude", user.uid);
 	    currentUserId = user.uid;
-
-
+	    setCurrentUser(user);
 	  } else {
 	    // No user is signed in.
-	    console.log("user not logged in");
+	    // console.log("user not logged in");
 	    // currentUser = null;
 	  }
 	});
@@ -21,7 +21,7 @@ app.factory("AuthFactory", function(){
 	let logout = function(){
 		firebase.auth().signOut().then(function(){
 			currentUserId = null;
-			console.log("logged out!", currentUserId);
+			// console.log("logged out!", currentUserId);
 		}, function(error){
 
 		});
@@ -35,10 +35,19 @@ app.factory("AuthFactory", function(){
 		return (currentUserId) ? true : false;
 	};
 
-	let getUser = function(){
+	let setCurrentUser = function(newUser){
+		currentUser = newUser;
+		// console.log("setCurrentUser", currentUser);
+	};
+
+	let getCurrentUser = function(){
+		return currentUser;
+	};
+
+	let getUserId = function(){
 		return currentUserId;
 	};
 
-	return {authWithProvider, isAuthenticated, getUser, logout};
+	return {authWithProvider, isAuthenticated, getUserId, logout, setCurrentUser, getCurrentUser};
 
 });
