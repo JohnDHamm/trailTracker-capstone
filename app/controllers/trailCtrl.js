@@ -25,7 +25,6 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			 	})[0];
 
 			 	//define map parameters
-			 	let mapType = "TERRAIN";
 			 	$scope.map = { 
 			 		center: { latitude: $scope.selectedTrail.latitude, longitude: $scope.selectedTrail.longitude },
 			 		zoom: $scope.selectedTrail.mapZoom
@@ -36,19 +35,23 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				// get posts with selected trail Id
 			 	selectedTrailId = $scope.selectedTrail.trailId;
 
-					return DatabaseFactory.getTrailPosts(selectedTrailId);
+				return DatabaseFactory.getTrailPosts(selectedTrailId);
 				})
 				.then(function(posts){
-							$scope.posts = posts;
+					//sort posts by most recent first
+					let key = "postDate";
+					let sortedPosts = sortByKey(posts, key);
+					console.log("sortedPosts", sortedPosts);
 
-						// ********* GET GOOGLE MAP *************************
-				    // uiGmapGoogleMapApi is a promise.
-				    // The "then" callback function provides the google.maps object.
+					$scope.posts = sortedPosts;
 
-				    uiGmapGoogleMapApi.then(function(maps) {
-				    });
+					// ********* GET GOOGLE MAP *********
+			    // uiGmapGoogleMapApi is a promise.
+			    // The "then" callback function provides the google.maps object.
+			    uiGmapGoogleMapApi.then(function(maps) {
+			    });
 
-					});
+				});
 
 		let setWeather = function(){
 			WeatherFactory.getCurrentWeather($scope.selectedTrail.latitude, $scope.selectedTrail.longitude)
@@ -59,7 +62,6 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				});
 		};
 	};
-
 
 
 	$scope.postRideReport = function(){
@@ -124,6 +126,14 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				loadTrailPage();
 			});
 	};
+
+	function sortByKey(posts, key) {
+		return posts.sort(function(a, b) {
+			var x = a[key];
+			var y = b[key];
+			return ((y < x) ? -1 : ((y > x) ? 1 : 0));
+		});
+	}
 	
 	loadTrailPage();
 
