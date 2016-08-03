@@ -65,7 +65,8 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 
 	$scope.postRideReport = function(){
 		let typeString = "ride-report";
-		let timeStamp = Date.now();
+		let timeStamp = new Date();
+
 		newPost = {
 			description: $scope.description,
 			postType: 1,
@@ -73,6 +74,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			userId: AuthFactory.getUserId(),
 			userName: AuthFactory.getCurrentUser().userName,
 			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
 			ticketOpen: false,
 			postTrailId: $scope.selectedTrail.trailId
 		};
@@ -86,7 +88,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 
 	$scope.postOpenTicket = function(){
 		let typeString = "open-ticket";
-		let timeStamp = Date.now();
+		let timeStamp = new Date();
 		newPost = {
 			description: $scope.description,
 			postType: 2,
@@ -94,6 +96,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			userId: AuthFactory.getUserId(),
 			userName: AuthFactory.getCurrentUser().userName,
 			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
 			ticketOpen: true,
 			postTrailId: $scope.selectedTrail.trailId
 		};
@@ -107,7 +110,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 
 	$scope.postMeetup = function(){
 		let typeString = "meetup";
-		let timeStamp = Date.now();
+		let timeStamp = new Date();
 		newPost = {
 			description: $scope.description,
 			postType: 3,
@@ -115,6 +118,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			userId: AuthFactory.getUserId(),
 			userName: AuthFactory.getCurrentUser().userName,
 			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
 			ticketOpen: false,
 			postTrailId: $scope.selectedTrail.trailId
 		};
@@ -127,7 +131,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 	};
 
 	$scope.closeTicket = function (origPostId) {
-		let timeStamp = Date.now();
+		let timeStamp = new Date();
 		let typeString = "closed-ticket";
 		let origPost = {};
 
@@ -137,12 +141,15 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				origPost = post;
 			}
 		});
+		// console.log("origPost.postDate", origPost.postDate);
+		let origPostDate = origPost.postFormatDate;
+		// console.log("origPostDate", origPostDate);
 
 		let fixerUserName = AuthFactory.getCurrentUser().userName;
 
 		let newDescription = $scope.description;
 
-		let closedDescription = `original issue: "${origPost.description}"" by ${origPost.userName} on ${origPost.postDate} has been closed by ${fixerUserName} - "${newDescription}" - Beers for all!`;
+		let closedDescription = `original issue: "${origPost.description}"" by ${origPost.userName} on ${origPostDate} has been closed by ${fixerUserName} - "${newDescription}" - Beers for all!`;
 
 		newClosedPost = {
 			description: closedDescription,
@@ -151,6 +158,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			userId: AuthFactory.getUserId(),
 			userName: AuthFactory.getCurrentUser().userName,
 			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
 			ticketOpen: false,
 			postTrailId: $scope.selectedTrail.trailId
 		};
@@ -172,6 +180,32 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 		});
 	}
 	
+	let formatDate = function(newDate) {
+    // Create a date object with the current time
+      var now = newDate;
+    // Create an array with the current month, day and time
+      var date = [ now.getMonth() + 1, now.getDate(), now.getFullYear() ];
+    // Create an array with the current hour, minute and second
+      var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+    // Determine AM or PM suffix based on the hour
+      var suffix = ( time[0] < 12 ) ? "AM" : "PM";
+    // Convert hour from military time
+      time[0] = ( time[0] < 12 ) ? time[0] : time[0] - 12;
+    // If hour is 0, set it to 12
+      time[0] = time[0] || 12;
+    // If seconds and minutes are less than 10, add a zero
+      for ( var i = 1; i < 3; i++ ) {
+        if ( time[i] < 10 ) {
+          time[i] = "0" + time[i];
+        }
+      }
+    // Return the formatted string
+      return date.join("/") + " " + time.join(":") + " " + suffix;
+   };
+
+
+
+
 	loadTrailPage();
 
 });
