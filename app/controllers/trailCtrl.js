@@ -16,10 +16,14 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	let newClosedPost = {};
 	let origPost = {};
 
+	$scope.selectPhotoUrl = null;
+
 	$scope.showCloseTicketModal = false;
 	$scope.showOpenTicketModal = false;
 	$rootScope.photoUploadDone = false;
 	$scope.$watch($rootScope.photoUploadDone);
+	$scope.showLargePhoto = false;
+
 	
 
 	let loadTrailPage = function(){
@@ -236,6 +240,19 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 				loadTrailPage();
 			});
 	};
+
+	// show full photo from selected thumbanil in post
+
+
+	$scope.showPhoto = function(url){
+		$scope.showLargePhoto = true;
+		$scope.selectPhotoUrl = url;
+	};
+
+	$scope.closePhoto = function(){
+		$scope.showLargePhoto = false;
+	};
+
 
 
 	loadTrailPage();

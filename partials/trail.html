@@ -1,154 +1,154 @@
+<div id="trailView">
 
-<div class="row">
+	<div class="row">
 
-	<div id="leftHalf" class="col m7 s12">
-		<div id="trailName" class="col s12">
-			<h4 class="center-align">{{selectedTrail.trailName}}</h4>
-		</div>
-
-
-		<div id="mapView" class="col s12">
-			<div id="map" class="angular-google-map-container z-depth-1">
-				<ui-gmap-google-map ng-if="map.center" center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+		<div id="leftHalf" class="col m7 s12">
+			<div id="trailName" class="col s12">
+				<h4 class="center-align">{{selectedTrail.trailName}}</h4>
 			</div>
 
-		</div>
-		<div id="weather" class="col s12>"> 
-			<h5>current weather: {{weather.weather}}</h5>
-			<p>temperature: {{weather.temperature_string}}</p>
-			<p>feels like: {{weather.feelslike_string}}</p>
 
+			<div id="mapView" class="col s12">
+				<div id="map" class="angular-google-map-container z-depth-1">
+					<ui-gmap-google-map ng-if="map.center" center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+				</div>
+
+			</div>
+			<div id="weather" class="col s12>"> 
+				<h5>current weather: {{weather.weather}}</h5>
+				<p>temperature: {{weather.temperature_string}}</p>
+				<p>feels like: {{weather.feelslike_string}}</p>
+
+			</div>
 		</div>
+
+
+		<div id="rightHalf" class="col m5 s12">
+
+			<div id="addPostDiv" class="col s12" ng-show="!loggedIn">
+				<div class="collection">
+					<a class="collection-item center-align" ng-href="#/login">Login to add a post</a>
+				</div>
+				<div class="divider"></div>
+			</div>
+
+
+			<!-- post entry div -->
+			<div id="postEntryDiv" ng-show="loggedIn">
+				<div class="col s12">
+					<p>add a new post:</p>
+					<textarea id="descriptionInput" class="materialize-textarea" ng-model="description" placeholder="type your new post here, then select type of post below"></textarea>
+		      <div id="postButtons" class="row">
+			      <div class="col s12 m4">
+							<div class="collection">
+					    	<a class="collection-item center-align btn-large light-green darken-3 white-text" ng-click="postRideReport()"><i class="material-icons left white-text">directions_bike</i>ride report</a>
+			      	</div>
+			      </div>
+			      <div class="col s12 m4">
+							<div class="collection">
+					    	<a class="collection-item center-align btn-large red darken-2 white-text" ng-click="openTicketModal()"><i class="material-icons left white-text">report_problem</i>open ticket</a>
+			      	</div>
+			      </div>
+			      <div class="col s12 m4">
+							<div class="collection">
+					    	<a class="collection-item center-align btn-large light-blue darken-3 white-text" ng-click="postMeetup()"><i class="material-icons left white-text">group</i>post meetup</a>
+			      	</div>
+			      </div>
+		      </div>
+				</div>
+				<div class="divider"></div>
+			</div>
+
+			<!-- POSTS div-->		
+			<div id="posts" class="col s12">
+				<div class="divider"></div>
+				<div ng-repeat="post in posts">
+					<div class="section">
+
+					<div class="row">
+						<div class="col m6">
+							<div class="chip">
+								<img src="/img/testProfilePic.jpg">{{post.userName}}</div>
+						</div>
+						<div class="col m6">
+							<h6 class="{{post.postTypeString}}">{{post.postTypeString}}</h6>
+						</div>
+					</div>
+
+						<p>{{post.description}}</p>					
+						<p class="right-align">{{post.postFormatDate}}</p>
+
+						<!-- photo thumbnail + button for closing ticket -->
+						<div class="row"> 
+							<div class="col s12 m3" ng-show="{{post.ticketOpen}}">
+								<a ng-click="showPhoto(post.imageUrl)">
+								<img class="imgThumb" ng-src="{{post.imageUrl}}" alt="">
+								</a>
+							</div>
+							<div class="col s12 m3 offset-m6" ng-show="{{post.ticketOpen}}">					
+								<button class="btn lime darken-1" ng-disabled="!loggedIn" ng-click="closeTicketModal(post.postId)">close ticket</button>
+							</div>
+						</div>
+
+
+					</div> <!--section -->
+					<div class="divider"></div>
+				</div> <!-- ng-repeat -->
+
+			</div><!-- posts -->
+
+
+
+
+	<!-- MODALS -->
+
+
+		<!-- modal for closing ticket-->
+		<div id = "ticketModal-close" class="col s12 m8" ng-show="showCloseTicketModal">
+			<p>thanks, rock star!</p>
+			<textarea class="materialize-textarea" ng-model="closeDescription" placeholder="add a description for the ticket closing..."></textarea>
+
+		  <div id="modalButtons-close" class="row">
+		    <div class="col s12 m6 btn light-green darken-3 white-text" ng-click="closeTicket()">close ticket</div>
+		    <div class="col s12 m6 btn red darken-2 white-text" ng-click="cancelCloseTicket()">cancel</div>
+			</div>
+		</div> <!-- modal -->
+
+		<!-- modal for adding photo to open ticket-->
+		<div id = "ticketModal-open" class="col s12 m8" ng-show="showOpenTicketModal">
+			<form>
+				<p>Add a photo of the issue:</p>
+	      <div class="file-field input-field">
+	        <div class="btn" ngf-select ng-model="uploadedImg" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'">Select</div>
+	        <div class="file-path-wrapper">
+	          <input class="file-path validate" type="text" ng-model="uploadedImg.name">
+	        </div>
+	      </div>
+	  	</form>
+
+		  <div id="modalButtons-open" class="row">
+	    	<div class="col s12 m6 btn light-green darken-3 white-text" ng-click="uploadOpenTicketImg(uploadedImg)">upload photo</div>
+
+	    	<div class="col s12 m6 btn red darken-2 white-text" ng-click="postOpenTicket()">no thanks</div>
+			</div>
+
+			<div class="row">
+				<div id="completeTicketPostBtn" class="col s12 btn lime darken-1" ng-show="photoUploadDone" ng-click="postOpenTicket()">photo uploaded - post ticket</div>
+			</div>
+		</div> <!-- modal end-->
+
+
+		</div> <!--right half end-->
+
+
+	</div> <!-- both halfs row end -->
+
+
+		<!-- modal for fullphoto display-->
+	<div id="openTicketPhoto" ng-show="showLargePhoto">
+		<img ng-src="{{selectPhotoUrl}}" alt="" ng-click="closePhoto()">
 	</div>
 
 
-	<div id="rightHalf" class="col m5 s12">
-
-		<div id="addPostDiv" class="col s12" ng-show="!loggedIn">
-			<div class="collection">
-				<a class="collection-item center-align" ng-href="#/login">Login to add a post</a>
-			</div>
-			<div class="divider"></div>
-		</div>
-
-
-		<!-- post entry div -->
-		<div id="postEntryDiv" ng-show="loggedIn">
-			<div class="col s12">
-				<p>add a new post:</p>
-				<textarea id="descriptionInput" class="materialize-textarea" ng-model="description" placeholder="type your new post here, then select type of post below"></textarea>
-	      <div id="postButtons" class="row">
-		      <div class="col s12 m4">
-						<div class="collection">
-				    	<a class="collection-item center-align btn-large light-green darken-3 white-text" ng-click="postRideReport()"><i class="material-icons left white-text">directions_bike</i>ride report</a>
-		      	</div>
-		      </div>
-		      <div class="col s12 m4">
-						<div class="collection">
-				    	<a class="collection-item center-align btn-large red darken-2 white-text" ng-click="openTicketModal()"><i class="material-icons left white-text">report_problem</i>open ticket</a>
-		      	</div>
-		      </div>
-		      <div class="col s12 m4">
-						<div class="collection">
-				    	<a class="collection-item center-align btn-large light-blue darken-3 white-text" ng-click="postMeetup()"><i class="material-icons left white-text">group</i>post meetup</a>
-		      	</div>
-		      </div>
-	      </div>
-			</div>
-			<div class="divider"></div>
-		</div>
-
-		<!-- POSTS div-->		
-		<div id="posts" class="col s12">
-			<div class="divider"></div>
-			<div ng-repeat="post in posts">
-				<div class="section">
-
-				<div class="row">
-					<div class="col m6">
-						<div class="chip">
-							<img src="/img/testProfilePic.jpg">{{post.userName}}</div>
-					</div>
-					<div class="col m6">
-						<h6 class="{{post.postTypeString}}">{{post.postTypeString}}</h6>
-					</div>
-				</div>
-
-					<p>{{post.description}}</p>					
-					<p class="right-align">{{post.postFormatDate}}</p>
-
-					<!-- photo thumbanail + button for closing ticket -->
-					<div class="row"> 
-						<div class="col s12 m3" ng-show="{{post.ticketOpen}}">
-							<a href="{{post.imageUrl}}">
-							<img class="imgThumb" ng-src="{{post.imageUrl}}" alt="">
-							</a>
-						</div>
-						<div class="col s12 m3 offset-m6" ng-show="{{post.ticketOpen}}">					
-							<button class="btn lime darken-1" ng-disabled="!loggedIn" ng-click="closeTicketModal(post.postId)">close ticket</button>
-						</div>
-					</div>
-
-					<!-- modal for photo -->
-<!-- 					<div class="" ng-show="showLargePhoto">
-						<img ng-src="{{selectPhotoUrl}}" alt="">
-					</div>
- -->
-				</div> <!--section -->
-				<div class="divider"></div>
-			</div> <!-- ng-repeat -->
-
-		</div><!-- posts -->
-
-
-
-
-<!-- MODALS -->
-
-
-	<!-- modal for closing ticket-->
-	<div id = "ticketModal-close" class="col s12 m8" ng-show="showCloseTicketModal">
-		<p>thanks, rock star!</p>
-		<textarea class="materialize-textarea" ng-model="closeDescription" placeholder="add a description for the ticket closing..."></textarea>
-
-	  <div id="modalButtons-close" class="row">
-	    <div class="col s12 m6 btn light-green darken-3 white-text" ng-click="closeTicket()">close ticket</div>
-	    <div class="col s12 m6 btn red darken-2 white-text" ng-click="cancelCloseTicket()">cancel</div>
-		</div>
-	</div> <!-- modal -->
-
-	<!-- modal for adding photo to open ticket-->
-	<div id = "ticketModal-open" class="col s12 m8" ng-show="showOpenTicketModal">
-		<form>
-			<p>Add a photo of the issue:</p>
-      <div class="file-field input-field">
-        <div class="btn" ngf-select ng-model="uploadedImg" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'">Select</div>
-        <div class="file-path-wrapper">
-          <input class="file-path validate" type="text" ng-model="uploadedImg.name">
-        </div>
-      </div>
-  	</form>
-
-	  <div id="modalButtons-open" class="row">
-    	<div class="col s12 m6 btn light-green darken-3 white-text" ng-click="uploadOpenTicketImg(uploadedImg)">upload photo</div>
-
-    	<div class="col s12 m6 btn red darken-2 white-text" ng-click="postOpenTicket()">no thanks</div>
-		</div>
-
-		<div class="row">
-			<div id="completeTicketPostBtn" class="col s12 btn lime darken-1" ng-show="photoUploadDone" ng-click="postOpenTicket()">photo uploaded - post ticket</div>
-		</div>
-	</div> <!-- modal -->
-
-
-
-
-
-
-	</div> <!--right half -->
-
 
 </div>
-
-
-
