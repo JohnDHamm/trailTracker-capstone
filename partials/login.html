@@ -1,14 +1,15 @@
 <div class="container">
 
   <div class = "row">
-    <div class="col m4 offset-m4 s12">
-      <button ng-click="loginWithGoogle()" class="btn">login with Google</button>
+    <div class="col s12 m6 offset-m3">
+      <h5>login with Google</h5>
+      <button ng-click="loginWithGoogle()" class="btn">login</button>
     </div>
   </div>
 
 
-  <div ng-show="showRegister">
-    <p>welcome, new registrant! please enter a user name:</p>
+  <div class="col s12 m6" ng-show="showRegister">
+    <p>welcome, new user! please enter a user name:</p>
     <input type="text" name="userName" ng-model="userName">
     <button ng-click="registerUser()" class="btn">register</button>
 

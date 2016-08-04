@@ -50,9 +50,10 @@ app.controller("loginCtrl", function($scope, AuthFactory, $location, DatabaseFac
 			});
 	};
 
-	$scope.uploadImg = function(file){
-		console.log(file.name);
-		StorageFactory.uploadTask(file, StorageFactory.getMetadata());
-	};
+	// ******** for image upload *******************
+	// $scope.uploadImg = function(file){
+	// 	console.log(file.name);
+	// 	StorageFactory.uploadTask(file, StorageFactory.getMetadata());
+	// };
 
 });
