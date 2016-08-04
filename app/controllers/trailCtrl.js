@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory){
+app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory, $rootScope){
 
 	//check if logged in to display option for adding new post
 	$scope.loggedIn = AuthFactory.isAuthenticated();
@@ -18,8 +18,8 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 	$scope.showCloseTicketModal = false;
 	$scope.showOpenTicketModal = false;
-	$scope.photoUploadDone = false;
-
+	$rootScope.photoUploadDone = false;
+	$scope.$watch($rootScope.photoUploadDone);
 	
 
 	let loadTrailPage = function(){
@@ -203,16 +203,17 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
   $scope.uploadOpenTicketImg = function(file){
 		console.log(file.name);
-		$scope.showOpenTicketModal = false;
+		// $scope.showOpenTicketModal = false;
 		StorageFactory.uploadTask(file, StorageFactory.getMetadata());
-		$scope.postOpenTicket();
+		// $scope.postOpenTicket();
 		//check to see if upload done + have url
-		
+
 	};
 
 
 	$scope.postOpenTicket = function(){
-		console.log("begin postng open ticket" );
+		console.log("begin posting open ticket" );
+		$rootScope.photoUploadDone = false;
 		$scope.showOpenTicketModal = false;
 		let typeString = "open-ticket";
 		let timeStamp = new Date();

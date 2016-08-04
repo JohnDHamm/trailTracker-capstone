@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("StorageFactory", function($q, $http, FirebaseURL) {
+app.factory("StorageFactory", function($q, $http, FirebaseURL, $rootScope) {
 
 	let imageUrl = "";
     
@@ -34,6 +34,8 @@ app.factory("StorageFactory", function($q, $http, FirebaseURL) {
         imgRef.getDownloadURL()
           .then(function(url) {
             imageUrl = url;
+            $rootScope.photoUploadDone = true;
+            $rootScope.$apply();
             console.log("upload done - image url:", imageUrl);
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
