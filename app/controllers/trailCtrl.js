@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory){
+app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory){
 
 	//check if logged in to display option for adding new post
 	$scope.loggedIn = AuthFactory.isAuthenticated();
@@ -18,6 +18,7 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 
 	$scope.showCloseTicketModal = false;
 	$scope.showOpenTicketModal = false;
+	$scope.photoUploadDone = false;
 
 	
 
@@ -115,7 +116,6 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 
 
 	$scope.closeTicketModal = function(origPostId){
-		console.log("clicked close button");
 		$scope.showCloseTicketModal = true;
 
 		//get original post for description, user, date
@@ -129,7 +129,6 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 	//cancel button - close modal
 	$scope.cancelCloseTicket = function() {
 		$scope.showCloseTicketModal = false;
-		console.log("cancelled" );
 	};
 
 	$scope.closeTicket = function () {
@@ -205,8 +204,10 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
   $scope.uploadOpenTicketImg = function(file){
 		console.log(file.name);
 		$scope.showOpenTicketModal = false;
-		console.log("what?", StorageFactory.uploadTask(file, StorageFactory.getMetadata()));
+		StorageFactory.uploadTask(file, StorageFactory.getMetadata());
 		$scope.postOpenTicket();
+		//check to see if upload done + have url
+		
 	};
 
 

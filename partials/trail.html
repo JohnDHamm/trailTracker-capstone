@@ -82,7 +82,12 @@
 
 					<!-- button for closing ticket -->
 					<div class="row"> 
-						<div class="col s12 m3 offset-m9" ng-show="{{post.ticketOpen}}">					
+						<div class="col s12 m3">
+							<a href="{{post.imageUrl}}">
+							<img class="imgThumb" ng-src="{{post.imageUrl}}" alt="">
+							</a>
+						</div>
+						<div class="col s12 m3 offset-m6" ng-show="{{post.ticketOpen}}">					
 							<button class="btn lime darken-1" ng-click="closeTicketModal(post.postId)">close ticket</button>
 						</div>
 					</div>
@@ -104,17 +109,9 @@
 		<p>thanks, rock star!</p>
 		<textarea class="materialize-textarea" ng-model="closeDescription" placeholder="add a description for the ticket closing..."></textarea>
 
-	  <div id="modalButtons" class="row">
-	    <div class="col s12 m6">
-				<div class="collection">
-		    	<a class="collection-item center-align btn-large light-green darken-3 white-text" ng-click="closeTicket()"><i class="material-icons left white-text">directions_bike</i>close ticket</a>
-	    	</div>
-	    </div>
-	    <div class="col s12 m6">
-				<div class="collection">
-		    	<a class="collection-item center-align btn-large red darken-2 white-text" ng-click="cancelCloseTicket()"><i class="material-icons left white-text">report_problem</i>cancel</a>
-	    	</div>
-			</div>
+	  <div id="modalButtons-close" class="row">
+	    <div class="col s12 m6 btn light-green darken-3 white-text" ng-click="closeTicket()">close ticket</div>
+	    <div class="col s12 m6 btn red darken-2 white-text" ng-click="cancelCloseTicket()">cancel</div>
 		</div>
 	</div> <!-- modal -->
 
@@ -128,20 +125,15 @@
           <input class="file-path validate" type="text" ng-model="uploadedImg.name">
         </div>
       </div>
-<!--       <button ng-click="uploadImg(uploadedImg)">Upload</button> -->
   	</form>
 
 	  <div id="modalButtons-open" class="row">
-	    <div class="col s12 m6">
-				<div class="collection">
-		    	<a class="collection-item center-align btn-large light-green darken-3 white-text" ng-click="uploadOpenTicketImg(uploadedImg)"><i class="material-icons left white-text">directions_bike</i>upload photo</a>
-	    	</div>
-	    </div>
-	    <div class="col s12 m6">
-				<div class="collection">
-		    	<a class="collection-item center-align btn-large red darken-2 white-text" ng-click="postOpenTicket()"><i class="material-icons left white-text">report_problem</i>no thanks</a>
-	    	</div>
-			</div>
+    	<div class="col s12 m6 btn light-green darken-3 white-text" ng-click="uploadOpenTicketImg(uploadedImg)">upload photo</div>
+    	<div class="col s12 m6 btn red darken-2 white-text" ng-click="postOpenTicket()">no thanks</div>
+		</div>
+		<div class="row">
+			<div id="completeTicketPostBtn" class="col s12 btn lime darken-1" ng-show="{{photoUploadDone}}" ng-click="postOpenTicket()">photo uploaded - post ticket</div>
+			
 		</div>
 	</div> <!-- modal -->
 
