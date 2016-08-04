@@ -1,12 +1,7 @@
-.test {
-	color: red;
+
+.angular-google-map-container { 
+	height: 400px; 
 }
-
-// #map #mapView{ 
-// 	height: 100%;
-// }
-
-.angular-google-map-container { height: 400px; }
 
 #posts {
 	height: 500px;
@@ -27,6 +22,15 @@
 
 .closed-ticket {
 	color: gray;
+}
+
+#postDate {
+	font-size: .8em;
+}
+
+.imgThumb {
+	width: 50%;
+	height: 40px;
 }
 
 .postSection {
@@ -60,10 +64,7 @@
 	background: rgba(255,255,255,.90);
 }
 
-.imgThumb {
-	width: 50%;
-	height: 40px;
-}
+
 
 #loaderContainer {
 	position: absolute;
@@ -71,9 +72,15 @@
 	top: 50%;
 	right: 50%;
 }
+
 #traiView{
 	position: relative;
 }
+
+.darkTransBg {
+	background: rgba(0,0,0, .75);
+}
+
 
 #openTicketPhoto {
 	position: absolute;
@@ -82,3 +89,12 @@
 	right: 10%;
 	width: 75%;
 }
+
+.noPhotoDiv {
+	color: #ccc;
+}
+
+.modalPhoto {
+	width: 100%
+}
+

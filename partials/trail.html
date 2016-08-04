@@ -1,4 +1,4 @@
-<div id="trailView">
+<div id="trailView" ng-class="{'darkTransBg': showLargePhoto}">
 
 	<div class="row">
 
@@ -31,7 +31,6 @@
 				</div>
 				<div class="divider"></div>
 			</div>
-
 
 			<!-- post entry div -->
 			<div id="postEntryDiv" ng-show="loggedIn">
@@ -66,26 +65,32 @@
 					<div class="section">
 
 					<div class="row">
-						<div class="col m6">
+						<div class="col m5">
 							<div class="chip">
-								<img src="/img/testProfilePic.jpg">{{post.userName}}</div>
+								<img src="/img/mustache-smiley-face.jpg">{{post.userName}}</div>
 						</div>
-						<div class="col m6">
+						<div class="col m3">
 							<h6 class="{{post.postTypeString}}">{{post.postTypeString}}</h6>
 						</div>
+						<div class="col m4">
+							<h6 id="postDate" class="right-align">{{post.postFormatDate}}</h6>
+						</div>
+
 					</div>
 
-						<p>{{post.description}}</p>					
-						<p class="right-align">{{post.postFormatDate}}</p>
+						<p class="{{post.postTypeString}}">{{post.description}}</p>					
+
 
 						<!-- photo thumbnail + button for closing ticket -->
-						<div class="row"> 
-							<div class="col s12 m3" ng-show="{{post.ticketOpen}}">
-								<a ng-click="showPhoto(post.imageUrl)">
-								<img class="imgThumb" ng-src="{{post.imageUrl}}" alt="">
-								</a>
-							</div>
-							<div class="col s12 m3 offset-m6" ng-show="{{post.ticketOpen}}">					
+						<div class="row" ng-show="{{post.ticketOpen}}"> 
+								<div class="col s12 m3 noPhotoDiv" ng-hide="{{post.hasPhoto}}">no photo avail</div>
+								<div class="col s12 m3" ng-show="{{post.hasPhoto}}">
+									<a ng-click="showPhoto(post.imageUrl)">
+									<img class="imgThumb" ng-src="{{post.imageUrl}}" alt="">
+									</a>
+								</div>							
+
+							<div class="col s12 m3 offset-m6" >					
 								<button class="btn lime darken-1" ng-disabled="!loggedIn" ng-click="closeTicketModal(post.postId)">close ticket</button>
 							</div>
 						</div>
@@ -127,9 +132,12 @@
 	  	</form>
 
 		  <div id="modalButtons-open" class="row">
-	    	<div class="col s12 m6 btn light-green darken-3 white-text" ng-click="uploadOpenTicketImg(uploadedImg)">upload photo</div>
+	    	<div class="col s12 m6 btn light-green darken-3 white-text" ng-click="uploadOpenTicketImg(uploadedImg)" ng-hide="photoLoading">upload photo</div>
 
-	    	<div class="col s12 m6 btn red darken-2 white-text" ng-click="postOpenTicket()">no thanks</div>
+	    	<div class="col s12 m12 btn lyellow lighten-2 disabled" ng-show="photoLoading">photo uploading...</div>
+
+
+	    	<div class="col s12 m6 btn red darken-2 white-text" ng-hide="photoLoading" ng-click="postOpenTicketNoPhoto()">no thanks</div>
 			</div>
 
 			<div class="row">
@@ -144,9 +152,11 @@
 	</div> <!-- both halfs row end -->
 
 
-		<!-- modal for fullphoto display-->
-	<div id="openTicketPhoto" ng-show="showLargePhoto">
-		<img ng-src="{{selectPhotoUrl}}" alt="" ng-click="closePhoto()">
+	<!-- modal for fullphoto display-->
+	<div id="fullView" ng-show="showLargePhoto">
+		<div id="openTicketPhoto">
+				<img class="modalPhoto" ng-src="{{selectPhotoUrl}}" alt="" ng-click="closePhoto()">
+		</div>
 	</div>
 
 

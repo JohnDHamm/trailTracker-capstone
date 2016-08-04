@@ -23,6 +23,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$rootScope.photoUploadDone = false;
 	$scope.$watch($rootScope.photoUploadDone);
 	$scope.showLargePhoto = false;
+	$scope.photoLoading = false;
 
 	
 
@@ -206,6 +207,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 
   $scope.uploadOpenTicketImg = function(file){
+  	$scope.photoLoading = true;
 		console.log(file.name);
 		// $scope.showOpenTicketModal = false;
 		StorageFactory.uploadTask(file, StorageFactory.getMetadata());
@@ -216,7 +218,9 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 
 	$scope.postOpenTicket = function(){
+		$scope.photoLoading = false;
 		console.log("begin posting open ticket" );
+		$scope.uploadedImg = "";
 		$rootScope.photoUploadDone = false;
 		$scope.showOpenTicketModal = false;
 		let typeString = "open-ticket";
@@ -230,8 +234,38 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			postDate: timeStamp,
 			postFormatDate: formatDate(timeStamp),
 			ticketOpen: true,
+			hasPhoto: true,
 			postTrailId: $scope.selectedTrail.trailId,
 			imageUrl: StorageFactory.getImageUrl()
+		};
+		DatabaseFactory.addPost(newPost)
+			.then(function(){
+				//reload page/posts
+				$scope.description = "";
+				loadTrailPage();
+			});
+	};
+
+	$scope.postOpenTicketNoPhoto = function(){
+		$scope.photoLoading = false;
+		$scope.uploadedImg = "";
+		console.log("begin posting open ticket without photo" );
+		$rootScope.photoUploadDone = false;
+		$scope.showOpenTicketModal = false;
+		let typeString = "open-ticket";
+		let timeStamp = new Date();
+		newPost = {
+			description: $scope.description,
+			postType: 2,
+			postTypeString: typeString,
+			userId: AuthFactory.getUserId(),
+			userName: AuthFactory.getCurrentUser().userName,
+			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
+			ticketOpen: true,
+			hasPhoto: false,
+			postTrailId: $scope.selectedTrail.trailId,
+			imageUrl: null
 		};
 		DatabaseFactory.addPost(newPost)
 			.then(function(){
