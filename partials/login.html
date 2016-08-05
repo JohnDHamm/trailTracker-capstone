@@ -1,66 +1,42 @@
 <div class="container">
 
   <div class = "row">
-    <div class="col m4 offset-m4 s12">
-      <button ng-click="loginWithGoogle()" class="btn">login with Google</button>
+    <div class="col s12 m6 offset-m3">
+      <h5 class="center-align">login with your Google account</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m3 offset-m5">
+      <button ng-click="loginWithGoogle()" class="btn">login</button>
     </div>
   </div>
 
 
   <div ng-show="showRegister">
-    <p>welcome, new registrant! please enter a user name:</p>
-    <input type="text" name="userName" ng-model="userName">
-    <button ng-click="registerUser()" class="btn">register</button>
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+        <h5 class="center-align">welcome! please enter a user name:</h5>
+        <input type="text" name="userName" ng-model="userName">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m3 offset-m5">
+        <button ng-click="registerUser()" class="btn">register</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- testing image upload - use for profile pic? -->
+    <!-- <form>
+      <div class="file-field input-field">
+          <div class="btn" ngf-select ng-model="uploadedImg" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'">Select</div>
+           <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" ng-model="uploadedImg.name">
+            </div>
+      </div>
+      <button ng-click="uploadImg(uploadedImg)">Upload</button>
+  </form> -->
     
-  </div>
 
 </div>
-
-
-
-
-<!-- <div class="row">
- -->  <!-- ============= BUTTON TOGGLE ============= -->
-<!--   <div class="row">
-    <div class="col s4 offset-s4">
-      <div class="row valign">
-        <div class="col s6"><a class="waves-effect waves-light btn" ng-click="activateRegisterMode()">register</a></div>
-        <div class="col s6"><a class="waves-effect waves-light btn" ng-click="activateLoginMode()">login</a></div>
-      </div>
-    </div>
-  </div>
- -->
-  <!-- ============= REGISTRATION FORM ============= -->
-<!--   <form class="col s8 offset-s2" ng-show="registerMode">
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="email" type="email" class="validate">
-        <label for="email">Email</label>
-      </div>
-      <div class="input-field col s12">
-        <input id="password" type="password" class="validate">
-        <label for="password">Password</label>
-      </div>
-    </div>
-
-    <div class="row"><div class="center-align"><button class="btn waves-effect waves-light">Register<i class="material-icons right">send</i></button></div></div>
-  </form>
- -->
-  <!-- ============= LOGIN FORM ============= -->
-<!--   <form class="col s8 offset-s2" ng-show="!registerMode">
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="email" type="email" class="validate">
-        <label for="email">Email</label>
-      </div>
-      <div class="input-field col s12">
-        <input id="password" type="password" class="validate">
-        <label for="password">Password</label>
-      </div>
-    </div>
-
-    <div class="row"><div class="center-align"><button class="btn waves-effect waves-light">Login<i class="material-icons right">send</i></button></div></div>
-  </form>
-  
-</div>
- -->

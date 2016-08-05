@@ -17,17 +17,64 @@
 <!-- Navbar -->
 	<div ng-include="'partials/navbar.html'"></div>
 
+<!-- LOADING SPINNER -->
+<div id="loaderContainer" loader>
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spincner-blue">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <div class="spinner-layer spinner-red">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <div class="spinner-layer spinner-yellow">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <div class="spinner-layer spinner-green">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!-- END OF LOADING SPINNER -->
 <!-- Main view -->
 	<div ng-view></div>
 
 
 
 
-<!-- ============= LINK TAGS ============= -->
+	<!-- ============= LINK TAGS ============= -->
   <!-- BEGINNING OF THE DANG LINK TAGS -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
   <script type="text/javascript" src="lib/bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/angular-route/angular-route.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/firebase/firebase.js"></script>
+  <script type="text/javascript" src="/lib/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
   
 <!-- for angular-google-maps -->
   <script src='lib/bower_components/lodash/dist/lodash.min.js'></script>
@@ -35,7 +82,6 @@
 	<script src='lib/bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
 
   <!-- Materialize: jQuery (necessary for Materialize's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
   <!-- Materialize: Latest compiled and minified JavaScript -->  
   <!-- <script type="text/javascript" src="lib/bower_components/materialize/dist/css/materialize.min.js"></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
@@ -46,7 +92,8 @@
   <!-- FACTORIES SECOND -->
   <script type="text/javascript" src="/app/factories/AuthFactory.js"></script>
   <script type="text/javascript" src="/app/factories/DatabaseFactory.js"></script>
-<!--   <script type="text/javascript" src="/app/factories/MapFactory.js"></script> -->
+  <script type="text/javascript" src="/app/factories/StorageFactory.js"></script>
+  <script type="text/javascript" src="/app/factories/LoaderFactory.js"></script>
   <script type="text/javascript" src="/app/factories/WeatherFactory.js"></script>
   <!-- CONTROLLERS LAST -->
   <script type="text/javascript" src="/app/controllers/trackerHomeCtrl.js"></script>

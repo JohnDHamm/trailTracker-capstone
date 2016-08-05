@@ -1,12 +1,10 @@
-.test {
-	color: red;
-}
-
-// #map #mapView{ 
-// 	height: 100%;
+// #homePage {
+// 	background-image: url("/img/testHomePagephoto.jpg");
 // }
 
-.angular-google-map-container { height: 400px; }
+.angular-google-map-container { 
+	height: 400px; 
+}
 
 #posts {
 	height: 500px;
@@ -29,7 +27,80 @@
 	color: gray;
 }
 
+#postDate {
+	font-size: .8em;
+}
+
+.imgThumb {
+	width: 50%;
+	height: 40px;
+}
+
 .postSection {
 	border: 1px solid #ccc;
 	border-radius: 5px;
+}
+
+#rightHalf{
+	position: relative;
+}
+
+#ticketModal-close {
+	position: absolute;
+	z-index: 4;
+	width: 400px;
+	top: 200px;
+	left: 20px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	background: rgba(255,255,255,.90);
+}
+
+#ticketModal-open {
+	position: absolute;
+	z-index: 4;
+	width: 400px;
+	top: 200px;
+	left: 20px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	background: rgba(255,255,255,.90);
+}
+
+
+
+#loaderContainer {
+	position: absolute;
+	z-index: 8;
+	top: 50%;
+	right: 50%;
+}
+
+#traiView{
+	position: relative;
+}
+
+.darkTransBg {
+	background: rgba(0,0,0, .75);
+}
+
+
+#openTicketPhoto {
+	position: absolute;
+	z-index: 6;
+	top: 100px;
+	right: 10%;
+	width: 75%;
+}
+
+.noPhotoDiv {
+	color: #ccc;
+}
+
+.modalPhoto {
+	width: 100%
+}
+
+.loginDiv {
+	height: 100%;
 }

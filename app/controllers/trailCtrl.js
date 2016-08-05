@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location){
+app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory, $rootScope){
 
 	//check if logged in to display option for adding new post
 	$scope.loggedIn = AuthFactory.isAuthenticated();
@@ -14,6 +14,16 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 	// let showPostForm = false;
 	let newPost = {};
 	let newClosedPost = {};
+	let origPost = {};
+
+	$scope.selectPhotoUrl = null;
+
+	$scope.showCloseTicketModal = false;
+	$scope.showOpenTicketModal = false;
+	$rootScope.photoUploadDone = false;
+	$scope.$watch($rootScope.photoUploadDone);
+	$scope.showLargePhoto = false;
+	$scope.photoLoading = false;
 
 	
 
@@ -86,27 +96,6 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			});
 	};
 
-	$scope.postOpenTicket = function(){
-		let typeString = "open-ticket";
-		let timeStamp = new Date();
-		newPost = {
-			description: $scope.description,
-			postType: 2,
-			postTypeString: typeString,
-			userId: AuthFactory.getUserId(),
-			userName: AuthFactory.getCurrentUser().userName,
-			postDate: timeStamp,
-			postFormatDate: formatDate(timeStamp),
-			ticketOpen: true,
-			postTrailId: $scope.selectedTrail.trailId
-		};
-		DatabaseFactory.addPost(newPost)
-			.then(function(){
-				//reload page/posts
-				$scope.description = "";
-				loadTrailPage();
-			});
-	};
 
 	$scope.postMeetup = function(){
 		let typeString = "meetup";
@@ -130,10 +119,9 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			});
 	};
 
-	$scope.closeTicket = function (origPostId) {
-		let timeStamp = new Date();
-		let typeString = "closed-ticket";
-		let origPost = {};
+
+	$scope.closeTicketModal = function(origPostId){
+		$scope.showCloseTicketModal = true;
 
 		//get original post for description, user, date
 		$scope.posts.forEach(function(post){
@@ -141,18 +129,27 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 				origPost = post;
 			}
 		});
-		// console.log("origPost.postDate", origPost.postDate);
-		let origPostDate = origPost.postFormatDate;
-		// console.log("origPostDate", origPostDate);
+	};
+
+	//cancel button - close modal
+	$scope.cancelCloseTicket = function() {
+		$scope.showCloseTicketModal = false;
+	};
+
+	$scope.closeTicket = function () {
+		$scope.showCloseTicketModal = false;
+
+		let timeStamp = new Date();
+		let typeString = "closed-ticket";
 
 		let fixerUserName = AuthFactory.getCurrentUser().userName;
 
-		let newDescription = $scope.description;
+		let newDescription = $scope.closeDescription;
 
-		let closedDescription = `original issue: "${origPost.description}"" by ${origPost.userName} on ${origPostDate} has been closed by ${fixerUserName} - "${newDescription}" - Beers for all!`;
+		let closedTicketDescription = `original issue: "${origPost.description}"" by ${origPost.userName} on ${origPost.postFormatDate} has been closed by ${fixerUserName} - "${newDescription}" - Beers for all!`;
 
 		newClosedPost = {
-			description: closedDescription,
+			description: closedTicketDescription,
 			postType: 4,
 			postTypeString: typeString,
 			userId: AuthFactory.getUserId(),
@@ -163,10 +160,11 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
 			postTrailId: $scope.selectedTrail.trailId
 		};
 
-		DatabaseFactory.resolveOpenTicket(newClosedPost, origPostId)
+		DatabaseFactory.resolveOpenTicket(newClosedPost, origPost.postId)
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
+				$scope.closeDescription = "";
 				loadTrailPage();
 			});
 	};
@@ -203,6 +201,91 @@ app.controller("trailCtrl", function($scope, $routeParams, DatabaseFactory, Weat
       return date.join("/") + " " + time.join(":") + " " + suffix;
    };
 
+  $scope.openTicketModal = function(){
+		$scope.showOpenTicketModal = true;
+	};
+
+
+  $scope.uploadOpenTicketImg = function(file){
+  	$scope.photoLoading = true;
+		console.log(file.name);
+		// $scope.showOpenTicketModal = false;
+		StorageFactory.uploadTask(file, StorageFactory.getMetadata());
+		// $scope.postOpenTicket();
+		//check to see if upload done + have url
+
+	};
+
+
+	$scope.postOpenTicket = function(){
+		$scope.photoLoading = false;
+		console.log("begin posting open ticket" );
+		$scope.uploadedImg = "";
+		$rootScope.photoUploadDone = false;
+		$scope.showOpenTicketModal = false;
+		let typeString = "open-ticket";
+		let timeStamp = new Date();
+		newPost = {
+			description: $scope.description,
+			postType: 2,
+			postTypeString: typeString,
+			userId: AuthFactory.getUserId(),
+			userName: AuthFactory.getCurrentUser().userName,
+			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
+			ticketOpen: true,
+			hasPhoto: true,
+			postTrailId: $scope.selectedTrail.trailId,
+			imageUrl: StorageFactory.getImageUrl()
+		};
+		DatabaseFactory.addPost(newPost)
+			.then(function(){
+				//reload page/posts
+				$scope.description = "";
+				loadTrailPage();
+			});
+	};
+
+	$scope.postOpenTicketNoPhoto = function(){
+		$scope.photoLoading = false;
+		$scope.uploadedImg = "";
+		console.log("begin posting open ticket without photo" );
+		$rootScope.photoUploadDone = false;
+		$scope.showOpenTicketModal = false;
+		let typeString = "open-ticket";
+		let timeStamp = new Date();
+		newPost = {
+			description: $scope.description,
+			postType: 2,
+			postTypeString: typeString,
+			userId: AuthFactory.getUserId(),
+			userName: AuthFactory.getCurrentUser().userName,
+			postDate: timeStamp,
+			postFormatDate: formatDate(timeStamp),
+			ticketOpen: true,
+			hasPhoto: false,
+			postTrailId: $scope.selectedTrail.trailId,
+			imageUrl: null
+		};
+		DatabaseFactory.addPost(newPost)
+			.then(function(){
+				//reload page/posts
+				$scope.description = "";
+				loadTrailPage();
+			});
+	};
+
+	// show full photo from selected thumbanil in post
+
+
+	$scope.showPhoto = function(url){
+		$scope.showLargePhoto = true;
+		$scope.selectPhotoUrl = url;
+	};
+
+	$scope.closePhoto = function(){
+		$scope.showLargePhoto = false;
+	};
 
 
 
