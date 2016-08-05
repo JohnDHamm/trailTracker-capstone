@@ -14,10 +14,13 @@
 				</div>
 
 			</div>
-			<div id="weather" class="col s12>"> 
+			<div id="weather" class="col s12>">
+				<img ng-src="{{weather.icon_url}}" alt="">
 				<h5>current weather: {{weather.weather}}</h5>
-				<p>temperature: {{weather.temperature_string}}</p>
-				<p>feels like: {{weather.feelslike_string}}</p>
+				<span>temperature: {{weather.temperature_string}}</span>
+				<span> -- feels like: {{weather.feelslike_string}}</span>
+				<p>wind: {{weather.wind_string}}</p>
+				<p>rain today: {{weather.precip_today_string}}</p>
 
 			</div>
 		</div>
