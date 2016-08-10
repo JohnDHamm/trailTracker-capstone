@@ -211,7 +211,10 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
   $scope.uploadOpenTicketImg = function(file){
   	$scope.photoLoading = true;
   	//get exif data and set to vars for map markers
+
 		StorageFactory.uploadTask(file, StorageFactory.setMetadata());
+  	let locationData = getGeoTagData(file);
+  	console.log("locationData", locationData);
 		// $scope.postOpenTicket();
 		//check to see if upload done + have url
 
@@ -291,18 +294,29 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 
 	let getGeoTagData = function(uploadedImg){
-    ExifFactory.EXIF.getData(uploadedImg, function() {
-      var latitude = ExifFactory.EXIF.getTag(uploadedImg, "GPSLatitude"),
-          longitude = ExifFactory.EXIF.getTag(uploadedImg, "GPSLongitude");
+    ExifFactory.EXIFgetData(uploadedImg, function() {
+      var latitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLatitude"),
+          longitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitude"),
+          longRef = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitudeRef");
       console.log("photo latitude", latitude);
       console.log("photo longitude", longitude);
+      console.log("log ref", longRef);
       let geoTagCoords = {"lat": latitude,
       	"long": longitude};
       console.log("geoTagCoords", geoTagCoords);
+      let testCoordSec = convertCoord(latitude);
       return geoTagCoords;
 
     });
 	};	
+
+	let convertCoord = function(coord){
+		let coordSec = coord[2].numerator/coord[2].denominator;
+		let coordMin = (coord[1].numerator/coord[1].denominator)+coordSec/60;
+		let coordDeg = (coord[0].numerator/coord[0].denominator)+coordMin/60;
+		console.log("converted coord:", coordDeg);
+
+	}
 
 
 

@@ -648,7 +648,8 @@ app.factory("ExifFactory", function() {
 
   function getStringFromDB(buffer, start, length) {
       var outstr = "";
-      for (n = start; n < start+length; n++) {
+      // for (n = start; n < start+length; n++) {
+      for (var n = start; n < start+length; n++) {
           outstr += String.fromCharCode(buffer.getUint8(n));
       }
       return outstr;
@@ -746,7 +747,8 @@ app.factory("ExifFactory", function() {
       return tags;
   }
 
-  EXIF.getData = function(img, callback) {
+  // EXIF.getData = function(img, callback) {
+  let EXIFgetData = function(img, callback) {
       if ((img instanceof Image || img instanceof HTMLImageElement) && !img.complete) return false;
 
       if (!imageHasData(img)) {
@@ -759,7 +761,8 @@ app.factory("ExifFactory", function() {
       return true;
   }
 
-  EXIF.getTag = function(img, tag) {
+  // EXIF.getTag = function(img, tag) {
+  let EXIFgetTag = function(img, tag) {
       if (!imageHasData(img)) return;
       return img.exifdata[tag];
   }
@@ -810,6 +813,6 @@ app.factory("ExifFactory", function() {
 // }.call(this));
 
 
-  return {EXIF.getTag, EXIF.getData};
+  return {EXIFgetTag, EXIFgetData};
 
 });
