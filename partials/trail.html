@@ -10,7 +10,12 @@
 
 			<div id="mapView" class="col s12">
 				<div id="map" class="angular-google-map-container z-depth-1">
-					<ui-gmap-google-map ng-if="map.center" center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+					<ui-gmap-google-map ng-if="map.center" center='map.center' zoom='map.zoom'>
+						<ui-gmap-markers ng-if="openMarkers" models="openMarkers" coords="'self'" icon="'icon'">
+							
+						</ui-gmap-markers>
+
+					</ui-gmap-google-map>
 				</div>
 
 			</div>

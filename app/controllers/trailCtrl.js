@@ -22,6 +22,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$scope.$watch($rootScope.photoUploadDone);
 	$scope.showLargePhoto = false;
 	$scope.photoLoading = false;
+	let geoTagCoords = {};
 
 	
 
@@ -48,11 +49,28 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 				return DatabaseFactory.getTrailPosts(selectedTrailId);
 				})
-				.then(function(posts){
+				.then(function(postsFromFB){
 					//sort posts by most recent first
 					let key = "postDate";
-					let sortedPosts = sortByKey(posts, key);
+					let sortedPosts = sortByKey(postsFromFB, key);
 					$scope.posts = sortedPosts;
+
+					//go through posts and push any geoTag coords to an array for map markers
+					let markers = [];
+					let idKey = "id";
+					let title = "title";
+					$scope.posts.forEach(function(post) {
+						if (post.photoGeoTag) {
+							let newMarker = post.photoGeoTag;
+							newMarker[title] = post.description;
+							newMarker[idKey] = post.postId;
+							markers.push(newMarker);
+							console.log("markers: ", markers);
+						}
+					});
+					$scope.openMarkers = markers;
+					
+
 					// ********* GET GOOGLE MAP *********
 			    // uiGmapGoogleMapApi is a promise.
 			    // The "then" callback function provides the google.maps object.
@@ -213,8 +231,8 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
   	//get exif data and set to vars for map markers
 
 		StorageFactory.uploadTask(file, StorageFactory.setMetadata());
-  	let locationData = getGeoTagData(file);
-  	console.log("locationData", locationData);
+  	let newTicketCoords = getGeoTagData(file);
+
 		// $scope.postOpenTicket();
 		//check to see if upload done + have url
 
@@ -241,7 +259,8 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			ticketOpen: true,
 			hasPhoto: true,
 			postTrailId: $scope.selectedTrail.trailId,
-			imageUrl: StorageFactory.getImageUrl()
+			imageUrl: StorageFactory.getImageUrl(),
+			photoGeoTag: geoTagCoords
 		};
 		DatabaseFactory.addPost(newPost)
 			.then(function(){
@@ -298,25 +317,33 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
       var latitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLatitude"),
           longitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitude"),
           longRef = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitudeRef");
-      console.log("photo latitude", latitude);
-      console.log("photo longitude", longitude);
-      console.log("log ref", longRef);
-      let geoTagCoords = {"lat": latitude,
-      	"long": longitude};
+      // convert to degrees only    
+      let convLat = convertCoord(latitude),
+      	convLong = convertCoord(longitude);
+
+      //check if longRef = West, change to negative value
+      if (longRef === "W") {
+      	console.log("west!");
+      	convLong = convLong * -1;
+      	console.log ("convLong", convLong);
+      }
+
+      geoTagCoords = {"latitude": convLat,
+      	"longitude": convLong};
       console.log("geoTagCoords", geoTagCoords);
-      let testCoordSec = convertCoord(latitude);
+      // let testCoordSec = convertCoord(latitude);
       return geoTagCoords;
 
     });
 	};	
 
+	// converts coordinates from deg/min/sec to degrees
 	let convertCoord = function(coord){
 		let coordSec = coord[2].numerator/coord[2].denominator;
-		let coordMin = (coord[1].numerator/coord[1].denominator)+coordSec/60;
-		let coordDeg = (coord[0].numerator/coord[0].denominator)+coordMin/60;
-		console.log("converted coord:", coordDeg);
-
-	}
+		let coordMin = (coord[1].numerator/coord[1].denominator)+(coordSec/60);
+		let coordDeg = (coord[0].numerator/coord[0].denominator)+(coordMin/60);
+		return coordDeg;
+	};
 
 
 
