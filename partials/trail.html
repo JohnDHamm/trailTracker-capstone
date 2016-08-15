@@ -22,13 +22,22 @@
 
 			</div>
 			<div id="weather" class="col s12>">
-				<img ng-src="{{weather.icon_url}}" alt="">
-				<h5>current weather: {{weather.weather}}</h5>
-				<span>temperature: {{weather.temperature_string}}</span>
-				<span> -- feels like: {{weather.feelslike_string}}</span>
-				<p>wind: {{weather.wind_string}}</p>
-				<p>rain today: {{weather.precip_today_string}}</p>
+				<div class="row weatherTop">
+					<div class="col s7">
+						<h4>current weather: <span class="darkWeatherText">{{weather.weather}}</span></h4>
+					</div>
+					<div class="col s3 offset-s2">
+						<img ng-src="{{weather.icon_url}}" alt="">
+					</div>
+				</div>
 
+				<div class="row">
+
+					<p>temperature: <span class="darkWeatherText">{{weather.temperature_string}}</span>
+					<span > -- feels like: <span class="darkWeatherText">{{weather.feelslike_string}}</span></p>
+					<p>wind: <span class="darkWeatherText">{{weather.wind_string}}</span></p>
+					<p>rain today: <span class="darkWeatherText">{{weather.precip_today_string}}</span></p>
+				</div>
 			</div>
 		</div>
 
