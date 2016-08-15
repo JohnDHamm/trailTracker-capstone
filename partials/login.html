@@ -1,42 +1,45 @@
-<div class="container">
+<div id="loginView">
+  
+  <div class="container">
 
-  <div class = "row">
-    <div class="col s12 m6 offset-m3">
-      <h5 class="center-align">login with your Google account</h5>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col s12 m3 offset-m5">
-      <button ng-click="loginWithGoogle()" class="btn">login</button>
-    </div>
-  </div>
-
-
-  <div ng-show="showRegister">
-    <div class="row">
-      <div class="col s12 m6 offset-m3">
-        <h5 class="center-align">welcome! please enter a user name:</h5>
-        <input type="text" name="userName" ng-model="userName">
+    <div class = "row">
+      <div class="col s12 m8 offset-m2">
+        <h5 class="center-align">please login with your Google account</h5>
       </div>
     </div>
+
     <div class="row">
       <div class="col s12 m3 offset-m5">
-        <button ng-click="registerUser()" class="btn">register</button>
+        <button ng-click="loginWithGoogle()" class="btn">login</button>
       </div>
     </div>
-  </div>
 
-    <!-- testing image upload - use for profile pic? -->
-    <!-- <form>
-      <div class="file-field input-field">
-          <div class="btn" ngf-select ng-model="uploadedImg" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'">Select</div>
-           <div class="file-path-wrapper">
-          <input class="file-path validate" type="text" ng-model="uploadedImg.name">
-            </div>
+
+    <div ng-show="showRegister">
+      <div class="row">
+        <div class="col s12 m8 offset-m2">
+          <h5 class="center-align">welcome! please enter a user name:</h5>
+          <input type="text" name="userName" ng-model="userName">
+        </div>
       </div>
-      <button ng-click="uploadImg(uploadedImg)">Upload</button>
-  </form> -->
-    
+      <div class="row">
+        <div class="col s12 m3 offset-m5">
+          <button ng-click="registerUser()" class="btn">register</button>
+        </div>
+      </div>
+    </div>
 
+      <!-- testing image upload - use for profile pic? -->
+      <!-- <form>
+        <div class="file-field input-field">
+            <div class="btn" ngf-select ng-model="uploadedImg" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'">Select</div>
+             <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" ng-model="uploadedImg.name">
+              </div>
+        </div>
+        <button ng-click="uploadImg(uploadedImg)">Upload</button>
+    </form> -->
+      
+
+  </div>
 </div>
