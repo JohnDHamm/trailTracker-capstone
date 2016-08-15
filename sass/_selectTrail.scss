@@ -1,0 +1,45 @@
+@import 'vars';
+
+#selectTrailView {
+	background: $secondary-color;
+	width: 100%;
+	height: 800px;
+}
+
+
+
+
+.trailCard {
+
+	.card-title {
+		font-family: $tertiary-font;
+		color: $primary-color;
+		font-size: 30px;
+	}
+
+	a {
+		font-family: $primary-font;
+		color: $secondary-color;
+	}
+
+	p.trailDescription {
+		font-family: $secondary-font;
+		font-size: 18px;
+		line-height: 1.25;
+		color: $tertiary-color;
+	}
+
+
+
+
+
+}
+
+// .trailPhotoDiv {
+// 	padding: 0;
+// }
+
+// .trailPhoto {
+// 	width: 100%;
+// }
+
