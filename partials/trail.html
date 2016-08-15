@@ -5,7 +5,7 @@
 
 		<div id="leftHalf" class="col m7 s12">
 			<div id="trailName" class="col s12">
-				<h4 class="center-align">{{selectedTrail.trailName}}</h4>
+				<h2 class="center-align">{{selectedTrail.trailName}}</h2>
 			</div>
 
 
@@ -36,8 +36,8 @@
 		<div id="rightHalf" class="col m5 s12">
 
 			<div id="addPostDiv" class="col s12" ng-show="!loggedIn">
-				<div class="collection">
-					<a class="collection-item center-align" ng-href="#/login">Login to add a post</a>
+				<div id="loginRequest" class="collection">
+					<a class="collection-item center-align" ng-href="#/login">please login to add a post</a>
 				</div>
 				<div class="divider"></div>
 			</div>
@@ -72,23 +72,23 @@
 			<div id="posts" class="col s12">
 				<div class="divider"></div>
 				<div ng-repeat="post in posts">
-					<div class="section">
+					<section class="section">
 
-					<div class="row">
-						<div class="col m5">
-							<div class="chip">
-								<img src="/img/mustache-smiley-face.jpg">{{post.userName}}</div>
-						</div>
-						<div class="col m3">
-							<h6 class="postType {{post.postTypeString}}">{{post.postTypeString}}</h6>
-						</div>
-						<div class="col m4">
-							<h6  class="postDate right-align">{{post.postFormatDate}}</h6>
+						<div class="row">
+							<div class="col m5">
+								<div class="chip">
+									<img src="/img/mustache-smiley-face.jpg">{{post.userName}}</div>
+							</div>
+							<div class="col m3">
+								<h6 class="postType {{post.postTypeString}}">{{post.postTypeString}}</h6>
+							</div>
+							<div class="col m4">
+								<h6  class="postDate right-align">{{post.postFormatDate}}</h6>
+							</div>
+
 						</div>
 
-					</div>
-
-						<p class="{{post.postTypeString}}">{{post.description}}</p>					
+						<p class="message {{post.postTypeString}}">{{post.description}}</p>					
 
 
 						<!-- photo thumbnail + button for closing ticket -->
@@ -106,7 +106,7 @@
 						</div>
 
 
-					</div> <!--section -->
+					</section> <!--section -->
 					<div class="divider"></div>
 				</div> <!-- ng-repeat -->
 

@@ -1,5 +1,16 @@
 @import 'vars';
 
+
+#loginRequest {
+	font-family: $primary-font;
+	
+	a {
+		background: $tertiary-color;
+		color: white;
+	}
+}
+
+
 #postEntryDiv {
 	font-family: $secondary-font;
 	font-size: 1.4em;
@@ -48,8 +59,6 @@
 		font-size: .8em;
 	}
 
-
-
 	.ride-report {
 		color: $rideReport-color;
 	}
@@ -64,6 +73,10 @@
 
 	.closed-ticket {
 		color: $closedTicket-color;
+	}
+
+	.message {
+		padding-left: 10px;
 	}
 
 	.imgThumb {

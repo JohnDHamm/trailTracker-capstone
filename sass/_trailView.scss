@@ -1,0 +1,37 @@
+@import 'vars';
+
+#leftHalf {
+	background-color: $secondary-color;
+
+
+	#trailName {
+		h2 {
+			font-family: $tertiary-font;
+			color: $primary-color;
+			text-shadow: 2px 2px 0 $tertiary-color;
+			margin: 1.2rem 0;
+		}
+
+	}
+
+
+	#map {
+		margin: 20px, 0;
+	}
+
+
+	#weather {
+		margin: 10px;
+		font-family: $secondary-font;
+		background-color: lighten($secondary-color, 30%);
+		color: $primary-color;
+		border: 3px solid $primary-color;
+		border-radius: 20px;
+		width: 98%;
+	}
+
+}
+
+
+
+
