@@ -9,7 +9,7 @@
   <!-- Materialize: NECESSARY FOR ICONS -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- WHAT GOOGLE FONTS SHALL WE USE? -->
- <!--  <link href='https://fonts.googleapis.com/css?family=Amatic+SC|Shadows+Into+Light|Limelight|Rock+Salt' rel='stylesheet' type='text/css'> -->
+  <link href="https://fonts.googleapis.com/css?family=Chelsea+Market|Harmattan|Rancho" rel="stylesheet">
 	<link rel="stylesheet" href="styles/main.css">
 </head>
 <body ng-app="TrailApp">
@@ -18,7 +18,7 @@
 	<div ng-include="'partials/navbar.html'"></div>
 
 <!-- LOADING SPINNER -->
-<div id="loaderContainer" loader>
+	<div id="loaderContainer" loader>
     <div class="preloader-wrapper big active">
         <div class="spinner-layer spincner-blue">
           <div class="circle-clipper left">
@@ -65,12 +65,10 @@
 <!-- Main view -->
 	<div ng-view></div>
 
-
-
-
 	<!-- ============= LINK TAGS ============= -->
   <!-- BEGINNING OF THE DANG LINK TAGS -->
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+
   <script type="text/javascript" src="lib/bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/angular-route/angular-route.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/firebase/firebase.js"></script>
@@ -83,13 +81,11 @@
 
   <!-- Materialize: jQuery (necessary for Materialize's JavaScript plugins) -->
   <!-- Materialize: Latest compiled and minified JavaScript -->  
-  <!-- <script type="text/javascript" src="lib/bower_components/materialize/dist/css/materialize.min.js"></script> -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 
 
   <!-- APP FIRST -->
   <script type="text/javascript" src="app/app.js"></script>
-  <!-- <script type="text/javascript" src="app/exif.js"></script> -->
   <!-- FACTORIES SECOND -->
   <script type="text/javascript" src="/app/factories/AuthFactory.js"></script>
   <script type="text/javascript" src="/app/factories/DatabaseFactory.js"></script>
@@ -105,7 +101,6 @@
   <script type="text/javascript" src="/app/controllers/trailCtrl.js"></script>
 
   <script type="text/javascript" src="/app/values/FirebaseCreds.js"></script>
-
 
 </body>
 </html>

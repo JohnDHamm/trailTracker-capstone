@@ -59,17 +59,20 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 					let markers = [];
 					let idKey = "id";
 					let title = "title";
+					let show = "show";
 					$scope.posts.forEach(function(post) {
 						if (post.photoGeoTag) {
 							let newMarker = post.photoGeoTag;
 							newMarker[title] = post.description;
 							newMarker[idKey] = post.postId;
+							newMarker[show] = false;
 							markers.push(newMarker);
-							console.log("markers: ", markers);
 						}
 					});
 					$scope.openMarkers = markers;
-					
+					$scope.onClick = function(marker, eventName, model) {
+            model.show = !model.show;
+          };
 
 					// ********* GET GOOGLE MAP *********
 			    // uiGmapGoogleMapApi is a promise.
@@ -242,7 +245,6 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$scope.postOpenTicket = function(){
 		//make map marker with geoData
 		$scope.photoLoading = false;
-		console.log("begin posting open ticket" );
 		$scope.uploadedImg = "";
 		$rootScope.photoUploadDone = false;
 		$scope.showOpenTicketModal = false;
@@ -273,7 +275,6 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$scope.postOpenTicketNoPhoto = function(){
 		$scope.photoLoading = false;
 		$scope.uploadedImg = "";
-		console.log("begin posting open ticket without photo" );
 		$rootScope.photoUploadDone = false;
 		$scope.showOpenTicketModal = false;
 		let typeString = "open-ticket";
@@ -323,15 +324,11 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
       //check if longRef = West, change to negative value
       if (longRef === "W") {
-      	console.log("west!");
       	convLong = convLong * -1;
-      	console.log ("convLong", convLong);
       }
 
       geoTagCoords = {"latitude": convLat,
       	"longitude": convLong};
-      console.log("geoTagCoords", geoTagCoords);
-      // let testCoordSec = convertCoord(latitude);
       return geoTagCoords;
 
     });
