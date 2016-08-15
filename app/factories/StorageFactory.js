@@ -11,7 +11,7 @@ app.factory("StorageFactory", function($q, $http, FirebaseURL, $rootScope) {
   var imagesRef = storageRef.child('img');
 
   // Create the file metadata
-  let getMetadata = function() {
+  let setMetadata = function() {
       let metadata = {
         contentType: 'image/jpg'
         // "uid": currentUser.uid
@@ -19,7 +19,7 @@ app.factory("StorageFactory", function($q, $http, FirebaseURL, $rootScope) {
       return metadata;
   };
 
-  // Upload file and metadata to the object 'images/mountains.jpg'
+  // Upload file and metadata to the object
   let uploadTask = function(file, metadata) {
     storageRef.child('img/' + file.name).put(file, metadata)
     .on('state_changed', function(snapshot){
@@ -34,9 +34,9 @@ app.factory("StorageFactory", function($q, $http, FirebaseURL, $rootScope) {
         imgRef.getDownloadURL()
           .then(function(url) {
             imageUrl = url;
+            //set var for knowing upload is done in controller
             $rootScope.photoUploadDone = true;
             $rootScope.$apply();
-            console.log("upload done - image url:", imageUrl);
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           });
@@ -56,6 +56,6 @@ app.factory("StorageFactory", function($q, $http, FirebaseURL, $rootScope) {
     return imageUrl;
   };
 
-  return {uploadTask, getMetadata, fetchDownloadLink, getImageUrl};
+  return {uploadTask, setMetadata, fetchDownloadLink, getImageUrl};
 
 });

@@ -1,6 +1,11 @@
-// #homePage {
-// 	background-image: url("/img/testHomePagephoto.jpg");
-// }
+@import 'navbar';
+@import 'selectTrail';
+
+// font-family: 'Harmattan', sans-serif;
+// font-family: 'Rancho', cursive;
+// font-family: 'Chelsea Market', cursive;
+
+
 
 .angular-google-map-container { 
 	height: 400px; 
@@ -41,6 +46,10 @@
 	border-radius: 5px;
 }
 
+.noPhotoDiv {
+	color: #ccc;
+}
+
 #rightHalf{
 	position: relative;
 }
@@ -76,7 +85,7 @@
 	right: 50%;
 }
 
-#traiView{
+#trailView{
 	position: relative;
 }
 
@@ -88,17 +97,15 @@
 #openTicketPhoto {
 	position: absolute;
 	z-index: 6;
-	top: 100px;
-	right: 10%;
-	width: 75%;
-}
-
-.noPhotoDiv {
-	color: #ccc;
+	top: 0px;
+	left: 0%;
+	width: 100%;
+	padding: 20px 10% 20px 10%;
+	background-color: rgba(0,0,0, .75);
 }
 
 .modalPhoto {
-	width: 100%
+	width: 100%;
 }
 
 .loginDiv {

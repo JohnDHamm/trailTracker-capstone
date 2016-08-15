@@ -1,17 +1,15 @@
 "use strict";
 
-app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory, $rootScope){
+app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, WeatherFactory, uiGmapGoogleMapApi, AuthFactory, $location, Upload, StorageFactory, $rootScope, ExifFactory){
 
 	//check if logged in to display option for adding new post
 	$scope.loggedIn = AuthFactory.isAuthenticated();
 
-	// get all trails then filter to just the trail with the path Id
 	$scope.trailList = [];
 	$scope.weather = {};
 	$scope.posts = [];
 	let selectedTrailId = "";
 	let selectedTrail = {};
-	// let showPostForm = false;
 	let newPost = {};
 	let newClosedPost = {};
 	let origPost = {};
@@ -24,9 +22,11 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$scope.$watch($rootScope.photoUploadDone);
 	$scope.showLargePhoto = false;
 	$scope.photoLoading = false;
+	let geoTagCoords = {};
 
 	
 
+	// get all trails then filter to just the trail with the path Id
 	let loadTrailPage = function(){
 		DatabaseFactory.getTrailList()
 			.then(function(trails){
@@ -49,14 +49,37 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 				return DatabaseFactory.getTrailPosts(selectedTrailId);
 				})
-				.then(function(posts){
+				.then(function(postsFromFB){
 					//sort posts by most recent first
 					let key = "postDate";
-					let sortedPosts = sortByKey(posts, key);
+					let sortedPosts = sortByKey(postsFromFB, key);
 					$scope.posts = sortedPosts;
+
+					//go through posts and push any geoTag coords to an array for map markers
+					let markers = [];
+					let idKey = "id";
+					let title = "title";
+					let show = "show";
+					$scope.posts.forEach(function(post) {
+						if (post.photoGeoTag) {
+							let newMarker = post.photoGeoTag;
+							newMarker[title] = post.description;
+							newMarker[idKey] = post.postId;
+							newMarker[show] = false;
+							markers.push(newMarker);
+						}
+					});
+					$scope.openMarkers = markers;
+					$scope.onClick = function(marker, eventName, model) {
+            model.show = !model.show;
+          };
+
 					// ********* GET GOOGLE MAP *********
 			    // uiGmapGoogleMapApi is a promise.
 			    // The "then" callback function provides the google.maps object.
+
+			    //get map markers from posts + add to map object
+
 			    uiGmapGoogleMapApi.then(function(maps) {
 			    });
 
@@ -208,9 +231,11 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
   $scope.uploadOpenTicketImg = function(file){
   	$scope.photoLoading = true;
-		console.log(file.name);
-		// $scope.showOpenTicketModal = false;
-		StorageFactory.uploadTask(file, StorageFactory.getMetadata());
+  	//get exif data and set to vars for map markers
+
+		StorageFactory.uploadTask(file, StorageFactory.setMetadata());
+  	let newTicketCoords = getGeoTagData(file);
+
 		// $scope.postOpenTicket();
 		//check to see if upload done + have url
 
@@ -218,8 +243,8 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 
 	$scope.postOpenTicket = function(){
+		//make map marker with geoData
 		$scope.photoLoading = false;
-		console.log("begin posting open ticket" );
 		$scope.uploadedImg = "";
 		$rootScope.photoUploadDone = false;
 		$scope.showOpenTicketModal = false;
@@ -236,7 +261,8 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			ticketOpen: true,
 			hasPhoto: true,
 			postTrailId: $scope.selectedTrail.trailId,
-			imageUrl: StorageFactory.getImageUrl()
+			imageUrl: StorageFactory.getImageUrl(),
+			photoGeoTag: geoTagCoords
 		};
 		DatabaseFactory.addPost(newPost)
 			.then(function(){
@@ -249,7 +275,6 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$scope.postOpenTicketNoPhoto = function(){
 		$scope.photoLoading = false;
 		$scope.uploadedImg = "";
-		console.log("begin posting open ticket without photo" );
 		$rootScope.photoUploadDone = false;
 		$scope.showOpenTicketModal = false;
 		let typeString = "open-ticket";
@@ -285,6 +310,36 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 	$scope.closePhoto = function(){
 		$scope.showLargePhoto = false;
+	};
+
+
+	let getGeoTagData = function(uploadedImg){
+    ExifFactory.EXIFgetData(uploadedImg, function() {
+      var latitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLatitude"),
+          longitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitude"),
+          longRef = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitudeRef");
+      // convert to degrees only    
+      let convLat = convertCoord(latitude),
+      	convLong = convertCoord(longitude);
+
+      //check if longRef = West, change to negative value
+      if (longRef === "W") {
+      	convLong = convLong * -1;
+      }
+
+      geoTagCoords = {"latitude": convLat,
+      	"longitude": convLong};
+      return geoTagCoords;
+
+    });
+	};	
+
+	// converts coordinates from deg/min/sec to degrees
+	let convertCoord = function(coord){
+		let coordSec = coord[2].numerator/coord[2].denominator;
+		let coordMin = (coord[1].numerator/coord[1].denominator)+(coordSec/60);
+		let coordDeg = (coord[0].numerator/coord[0].denominator)+(coordMin/60);
+		return coordDeg;
 	};
 
 
