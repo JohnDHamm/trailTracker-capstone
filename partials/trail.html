@@ -55,7 +55,7 @@
 			      </div>
 			      <div class="col s12 m4">
 							<div class="collection">
-					    	<a class="collection-item center-align btn-large red darken-2 white-text" ng-click="openTicketModal()"><i class="material-icons left white-text">report_problem</i>open ticket</a>
+					    	<a class="collection-item center-align btn-large red darken-3 white-text" ng-click="openTicketModal()"><i class="material-icons left white-text">report_problem</i>open ticket</a>
 			      	</div>
 			      </div>
 			      <div class="col s12 m4">
@@ -80,10 +80,10 @@
 								<img src="/img/mustache-smiley-face.jpg">{{post.userName}}</div>
 						</div>
 						<div class="col m3">
-							<h6 class="{{post.postTypeString}}">{{post.postTypeString}}</h6>
+							<h6 class="postType {{post.postTypeString}}">{{post.postTypeString}}</h6>
 						</div>
 						<div class="col m4">
-							<h6 id="postDate" class="right-align">{{post.postFormatDate}}</h6>
+							<h6  class="postDate right-align">{{post.postFormatDate}}</h6>
 						</div>
 
 					</div>
@@ -93,15 +93,15 @@
 
 						<!-- photo thumbnail + button for closing ticket -->
 						<div class="row" ng-show="{{post.ticketOpen}}"> 
-								<div class="col s12 m3 noPhotoDiv" ng-hide="{{post.hasPhoto}}">no photo avail</div>
+								<div class="col s12 m3 noPhotoDiv" ng-hide="{{post.hasPhoto}}">no photo</div>
 								<div class="col s12 m3" ng-show="{{post.hasPhoto}}">
 									<a ng-click="showPhoto(post.imageUrl)">
 									<img class="imgThumb" ng-src="{{post.imageUrl}}" alt="">
 									</a>
 								</div>							
 
-							<div class="col s12 m3 offset-m6" >					
-								<button class="btn lime darken-1" ng-disabled="!loggedIn" ng-click="closeTicketModal(post.postId)">close ticket</button>
+							<div class="col s12 m4 offset-m5" >					
+								<button class="btn" ng-disabled="!loggedIn" ng-class="{'disabledBtn': !loggedIn}" ng-click="closeTicketModal(post.postId)">close ticket</button>
 							</div>
 						</div>
 

@@ -1,0 +1,115 @@
+@import 'vars';
+
+#postEntryDiv {
+	font-family: $secondary-font;
+	font-size: 1.4em;
+	color: $tertiary-color;
+
+	p {
+		margin: 10px 0 0 0;
+	}
+
+	a {
+		font-family: $primary-font;
+		font-size: .75rem;
+		padding: 10px;
+	}
+
+	i {
+		margin: 0;
+	}
+
+	#descriptionInput {
+		padding: .5em 0;
+		font-size: 1em;
+	}
+
+}
+
+
+
+#posts {
+	height: 500px;
+	overflow: auto;
+	font-family: $secondary-font;
+	font-size: 1.4em;
+
+	.chip {
+		font-size: 18px;
+		background-color: #ffe57f; //amber accent-1
+		color: $tertiary-color;
+	}
+
+	.postType {
+		font-size: .9em;
+	}
+
+	.postDate {
+		font-size: .8em;
+	}
+
+
+
+	.ride-report {
+		color: $rideReport-color;
+	}
+
+	.meetup {
+		color: $meetup-color;
+	}
+
+	.open-ticket {
+		color: $openTicket-color;
+	}
+
+	.closed-ticket {
+		color: $closedTicket-color;
+	}
+
+	.imgThumb {
+		width: 50%;
+		height: 40px;
+	}
+
+	.noPhotoDiv {
+		color: #ccc;
+		font-size: .9em;
+	}
+
+	button {
+		font-family: $primary-font;
+		font-size: .65em;
+		background-color: #c0ca33; //lime darken-1
+	}
+
+	.disabledBtn {
+		@extend button;
+		background-color: #e0e0e0; //grey lighten-2
+	}
+
+}
+
+
+
+#openTicketPhoto {
+	position: absolute;
+	z-index: 6;
+	top: 0px;
+	left: 0%;
+	width: 100%;
+	padding: 20px 10% 20px 10%;
+	background-color: rgba(0,0,0, .75);
+}
+
+.modalPhoto {
+	width: 100%;
+}
+
+
+
+.postSection {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+
