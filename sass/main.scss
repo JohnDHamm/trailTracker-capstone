@@ -11,39 +11,6 @@
 
 
 
-.angular-google-map-container { 
-	height: 400px; 
-}
-
-
-#rightHalf{
-	position: relative;
-}
-
-#ticketModal-close {
-	position: absolute;
-	z-index: 4;
-	width: 400px;
-	top: 200px;
-	left: 20px;
-	border: 2px solid gray;
-	border-radius: 10px;
-	background: rgba(255,255,255,.90);
-}
-
-#ticketModal-open {
-	position: absolute;
-	z-index: 4;
-	width: 400px;
-	top: 200px;
-	left: 20px;
-	border: 2px solid gray;
-	border-radius: 10px;
-	background: rgba(255,255,255,.90);
-}
-
-
-
 #loaderContainer {
 	position: absolute;
 	z-index: 8;
@@ -51,17 +18,11 @@
 	right: 50%;
 }
 
-#trailView{
-	position: relative;
-}
-
-.darkTransBg {
-	background: rgba(0,0,0, .75);
-}
 
 
 
 
-.loginDiv {
-	height: 100%;
-}
+
+// .loginDiv {
+// 	height: 100%;
+// }

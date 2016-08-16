@@ -1,5 +1,9 @@
 @import 'vars';
 
+#trailView{
+	position: relative;
+}
+
 #leftHalf {
 	background-color: $secondary-color;
 
@@ -11,14 +15,15 @@
 			text-shadow: 2px 2px 0 $tertiary-color;
 			margin: 1.2rem 0;
 		}
-
 	}
-
 
 	#map {
 		margin: 20px, 0;
-	}
 
+		.angular-google-map-container { 
+			height: 400px; 
+		}
+	}
 
 	#weather {
 		margin: 10px;
@@ -30,15 +35,47 @@
 		width: 98%;
 
 		.weatherTop {
-			margin-bottom: 10px;
+			margin-bottom: 0;
 		}
 
 		.darkWeatherText {
 			color: darken($primary-color, 15%);
 		}
 
+		p {
+			font-size: 24px;
+			margin: 0 0 0 10px;
+		}
 	}
+}
 
+
+#rightHalf{
+	position: relative;
+}
+
+#ticketModal-close {
+	font-family: $primary-font;
+	position: absolute;
+	z-index: 4;
+	width: 400px;
+	top: 200px;
+	left: 20px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	background: rgba(255,255,255,.90);
+}
+
+#ticketModal-open {
+	font-family: $primary-font;
+	position: absolute;
+	z-index: 4;
+	width: 400px;
+	top: 200px;
+	left: 20px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	background: rgba(255,255,255,.90);
 }
 
 

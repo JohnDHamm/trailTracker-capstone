@@ -17,10 +17,12 @@
 	#appDescription {
 
 		p {
+			text-align: center;
 			font-family: $secondary-font;
 			color: white;
 			text-shadow: 2px 2px 1px $tertiary-color;
 			font-size: 40px;
+			
 		}
 	}
 
