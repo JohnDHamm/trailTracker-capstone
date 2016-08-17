@@ -1,0 +1,27 @@
+@import 'vars';
+
+#loginView {
+	background: $secondary-color;
+	width: 100%;
+	height: 800px;
+
+	h5 {
+		font-family: $primary-font;
+		color: $tertiary-color;
+		margin-top: 50px;
+	}
+
+	button {
+		font-family: $primary-font;
+		background: $tertiary-color;
+		color: white;
+	}
+
+	input {
+		font-family: $secondary-font;
+		color: $primary-color;
+		font-size: 3rem;
+	}
+
+
+}
