@@ -35,7 +35,7 @@
 					<p>temperature: <span class="darkWeatherText">{{weather.temperature_string}}</span>
 					<span > -- feels like: <span class="darkWeatherText">{{weather.feelslike_string}}</span></p>
 					<p>wind: <span class="darkWeatherText">{{weather.wind_string}}</span></p>
-					<p>rain today: <span class="darkWeatherText">{{weather.precip_today_string}}</span></p>
+					<p>rain chance: <span class="darkWeatherText">{{weather.precip_today_string}}</span></p>
 				</div>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 				<div class="divider"></div>
 			</div>
 
-			<!-- POSTS div-->		
+			<!-- POSTS div-->
 			<div id="posts" class="col s12">
 				<div class="divider"></div>
 				<div ng-repeat="post in posts">
@@ -96,19 +96,19 @@
 
 						</div>
 
-						<p class="message {{post.postTypeString}}">{{post.description}}</p>					
+						<p class="message {{post.postTypeString}}">{{post.description}}</p>
 
 
 						<!-- photo thumbnail + button for closing ticket -->
-						<div class="row" ng-show="{{post.ticketOpen}}"> 
+						<div class="row" ng-show="{{post.ticketOpen}}">
 								<div class="col s12 m3 noPhotoDiv" ng-hide="{{post.hasPhoto}}">no photo</div>
 								<div class="col s12 m3" ng-show="{{post.hasPhoto}}">
 									<a ng-click="showPhoto(post.imageUrl)">
 									<img class="imgThumb" ng-src="{{post.imageUrl}}" alt="">
 									</a>
-								</div>							
+								</div>
 
-							<div class="col s12 m4 offset-m5" >					
+							<div class="col s12 m4 offset-m5" >
 								<button class="btn" ng-disabled="!loggedIn" ng-class="{'disabledBtn': !loggedIn}" ng-click="closeTicketModal(post.postId)">close ticket</button>
 							</div>
 						</div>
