@@ -1,4 +1,4 @@
-lib/node_modules
-lib/bower_components
-styles
-app/values/FirebaseCreds.js
+myApp/lib/node_modules
+myApp/lib/bower_components
+myApp/styles
+myApp/app/values/FirebaseCreds.js

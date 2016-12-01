@@ -24,7 +24,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$scope.photoLoading = false;
 	let geoTagCoords = {};
 
-	
+
 
 	// get all trails then filter to just the trail with the path Id
 	let loadTrailPage = function(){
@@ -37,7 +37,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			 	})[0];
 
 			 	//define map parameters
-			 	$scope.map = { 
+			 	$scope.map = {
 			 		center: { latitude: $scope.selectedTrail.latitude, longitude: $scope.selectedTrail.longitude },
 			 		zoom: $scope.selectedTrail.mapZoom
 			 	};
@@ -200,7 +200,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			return ((y < x) ? -1 : ((y > x) ? 1 : 0));
 		});
 	}
-	
+
 	let formatDate = function(newDate) {
     // Create a date object with the current time
       var now = newDate;
@@ -318,7 +318,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
       var latitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLatitude"),
           longitude = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitude"),
           longRef = ExifFactory.EXIFgetTag(uploadedImg, "GPSLongitudeRef");
-      // convert to degrees only    
+      // convert to degrees only
       let convLat = convertCoord(latitude),
       	convLong = convertCoord(longitude);
 
@@ -332,7 +332,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
       return geoTagCoords;
 
     });
-	};	
+	};
 
 	// converts coordinates from deg/min/sec to degrees
 	let convertCoord = function(coord){
