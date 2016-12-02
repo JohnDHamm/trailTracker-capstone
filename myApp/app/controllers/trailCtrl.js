@@ -13,6 +13,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	let newPost = {};
 	let newClosedPost = {};
 	let origPost = {};
+	$scope.description = "";
 
 	$scope.selectPhotoUrl = null;
 
@@ -24,7 +25,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	$scope.photoLoading = false;
 	let geoTagCoords = {};
 
-
+	$scope.showPostErrMsg = false;
 
 	// get all trails then filter to just the trail with the path Id
 	let loadTrailPage = function(){
@@ -97,9 +98,14 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 
 	$scope.postRideReport = function(){
+		if ($scope.description === "") {
+			$scope.showPostErrMsg = true;
+			return;
+		}
+		$scope.showPostErrMsg = false;
+
 		let typeString = "ride-report";
 		let timeStamp = new Date();
-
 		newPost = {
 			description: $scope.description,
 			postType: 1,
@@ -121,6 +127,12 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 
 
 	$scope.postMeetup = function(){
+		if ($scope.description === "") {
+			$scope.showPostErrMsg = true;
+			return;
+		}
+		$scope.showPostErrMsg = false;
+
 		let typeString = "meetup";
 		let timeStamp = new Date();
 		newPost = {
@@ -225,6 +237,11 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
    };
 
   $scope.openTicketModal = function(){
+  	if ($scope.description === "") {
+			$scope.showPostErrMsg = true;
+			return;
+		}
+		$scope.showPostErrMsg = false;
 		$scope.showOpenTicketModal = true;
 	};
 
