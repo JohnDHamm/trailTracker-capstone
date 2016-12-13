@@ -36,7 +36,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			 	$scope.selectedTrail = $scope.trailList.filter(function(trail){
 			 		return trail.trailId === $routeParams.trailId;
 			 	})[0];
-
+			 	console.log("selected trail: ", $scope.selectedTrail);
 			 	//define map parameters
 			 	$scope.map = {
 			 		center: { latitude: $scope.selectedTrail.latitude, longitude: $scope.selectedTrail.longitude },
@@ -281,7 +281,9 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			imageUrl: StorageFactory.getImageUrl(),
 			photoGeoTag: geoTagCoords
 		};
+
 		DatabaseFactory.addPost(newPost)
+			// .then(DatabaseFactory.updateTrailTicketcount(updatedTrail))
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
@@ -309,7 +311,11 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			postTrailId: $scope.selectedTrail.trailId,
 			imageUrl: null
 		};
-		DatabaseFactory.addPost(newPost)
+		$scope.selectedTrail.numOpenTickets = $scope.selectedTrail.numOpenTickets + 1;
+		console.log("+1 open tickets: ", $scope.selectedTrail.numOpenTickets);
+
+		DatabaseFactory.updateTrailTicketCount($scope.selectedTrail)
+			.then(() => DatabaseFactory.addPost(newPost))
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
