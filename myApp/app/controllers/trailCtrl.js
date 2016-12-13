@@ -36,7 +36,6 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			 	$scope.selectedTrail = $scope.trailList.filter(function(trail){
 			 		return trail.trailId === $routeParams.trailId;
 			 	})[0];
-
 			 	//define map parameters
 			 	$scope.map = {
 			 		center: { latitude: $scope.selectedTrail.latitude, longitude: $scope.selectedTrail.longitude },
@@ -194,8 +193,9 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			ticketOpen: false,
 			postTrailId: $scope.selectedTrail.trailId
 		};
-
-		DatabaseFactory.resolveOpenTicket(newClosedPost, origPost.postId)
+		$scope.selectedTrail.numOpenTickets = $scope.selectedTrail.numOpenTickets - 1;
+		DatabaseFactory.updateTrailTicketCount($scope.selectedTrail)
+			.then(() => DatabaseFactory.resolveOpenTicket(newClosedPost, origPost.postId))
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
@@ -253,9 +253,6 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 		StorageFactory.uploadTask(file, StorageFactory.setMetadata());
   	let newTicketCoords = getGeoTagData(file);
 
-		// $scope.postOpenTicket();
-		//check to see if upload done + have url
-
 	};
 
 
@@ -281,7 +278,9 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			imageUrl: StorageFactory.getImageUrl(),
 			photoGeoTag: geoTagCoords
 		};
-		DatabaseFactory.addPost(newPost)
+		$scope.selectedTrail.numOpenTickets = $scope.selectedTrail.numOpenTickets + 1;
+		DatabaseFactory.updateTrailTicketCount($scope.selectedTrail)
+			.then(() => DatabaseFactory.addPost(newPost))
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
@@ -309,7 +308,10 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			postTrailId: $scope.selectedTrail.trailId,
 			imageUrl: null
 		};
-		DatabaseFactory.addPost(newPost)
+		$scope.selectedTrail.numOpenTickets = $scope.selectedTrail.numOpenTickets + 1;
+
+		DatabaseFactory.updateTrailTicketCount($scope.selectedTrail)
+			.then(() => DatabaseFactory.addPost(newPost))
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
