@@ -71,17 +71,13 @@ app.factory("DatabaseFactory", function($q, $http, FirebaseURL) {
 	};
 
 	let addPost = function(newPost){
-		console.log("newPost", newPost);
-		console.log("newPostStringified", JSON.stringify(newPost));
 		return $q(function(resolve, reject){
 			$http.post(`${FirebaseURL}/posts.json`,
 				JSON.stringify(newPost))
 			.success(function(ObjFromFirebase){
-				console.log("ObjFromFirebase", ObjFromFirebase);
 				//need to add fb postId to item and update
 				let newPostId = ObjFromFirebase.name;
 				newPost.postId = newPostId;
-				console.log("newPost", newPost);
 				$http.put(`${FirebaseURL}/posts/${newPostId}.json`, newPost);
 				resolve(ObjFromFirebase);
 			})
