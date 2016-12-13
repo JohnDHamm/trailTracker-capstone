@@ -281,9 +281,9 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 			imageUrl: StorageFactory.getImageUrl(),
 			photoGeoTag: geoTagCoords
 		};
-
-		DatabaseFactory.addPost(newPost)
-			// .then(DatabaseFactory.updateTrailTicketcount(updatedTrail))
+		$scope.selectedTrail.numOpenTickets = $scope.selectedTrail.numOpenTickets + 1;
+		DatabaseFactory.updateTrailTicketCount($scope.selectedTrail)
+			.then(() => DatabaseFactory.addPost(newPost))
 			.then(function(){
 				//reload page/posts
 				$scope.description = "";
