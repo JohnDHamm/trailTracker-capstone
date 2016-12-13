@@ -23,6 +23,7 @@ Deployed version for demonstration:  https://trailtracker-capstone.firebaseapp.c
 2. On trail selection page, the user's "home" trail will be displayed at the top, with all other trails ordered by proximity.
 3. Weather display for selected trail: options for viewing past rain data and future forecast.
 4. Ability to filter posts by post type (ride report, open/closed tickets, meetup).
+5. Refactoring for mobile.
 
 ###### _Proxy NodeJS Server_
 A separate NodeJS proxy server app was created for handling the unsecure API calls to WeatherUnderground (Firebase will not allow unsecure http requests from hosted apps). The app is deployed on Heroku and the repo is located here:
