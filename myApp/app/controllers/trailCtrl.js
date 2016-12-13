@@ -14,6 +14,7 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	let newClosedPost = {};
 	let origPost = {};
 	$scope.description = "";
+	$scope.closeDescription = "";
 
 	$scope.selectPhotoUrl = null;
 
@@ -26,6 +27,8 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	let geoTagCoords = {};
 
 	$scope.showPostErrMsg = false;
+	$scope.showCloseErrMsg = false;
+
 
 	// get all trails then filter to just the trail with the path Id
 	let loadTrailPage = function(){
@@ -171,6 +174,11 @@ app.controller("trailCtrl", function($q, $scope, $routeParams, DatabaseFactory, 
 	};
 
 	$scope.closeTicket = function () {
+		if ($scope.closeDescription === "") {
+			$scope.showCloseErrMsg = true;
+			return;
+		}
+
 		$scope.showCloseTicketModal = false;
 
 		let timeStamp = new Date();
