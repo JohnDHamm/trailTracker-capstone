@@ -73,7 +73,7 @@
 			      </div>
 		      </div>
 		      <div class="col s12 center red" ng-show="showPostErrMsg">
-		      	<p class="white-text">An Empty Post Won't Help!</p>
+		      	<p class="white-text">An Empty Post Won't Help Anyone!</p>
 	      	</div>
 				</div>
 				<div class="divider"></div>
@@ -133,6 +133,9 @@
 		<div id = "ticketModal-close" class="col s12 m8" ng-show="showCloseTicketModal">
 			<p>thanks, rock star!</p>
 			<textarea class="materialize-textarea" ng-model="closeDescription" placeholder="add a description for the ticket closing..."></textarea>
+			<div class="col s12 center red" ng-show="showCloseErrMsg">
+      	<p class="white-text">Please enter a description!</p>
+    	</div>
 
 		  <div id="modalButtons-close" class="row">
 		    <div class="col s12 m6 btn light-green darken-3 white-text" ng-click="closeTicket()">close ticket</div>
